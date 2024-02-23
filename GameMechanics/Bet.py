@@ -1,8 +1,9 @@
-class Bet:
-    betPlayer = 0;
-    betAi = 0;
 
-    def cardHigher():
+class Bet:
+    betPlayer = 0
+    betAi = 0
+
+    def cardHigher(cardHand):
         pass
 
     def cardLower():
