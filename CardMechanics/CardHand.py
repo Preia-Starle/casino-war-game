@@ -1,7 +1,10 @@
-from Card import Card
-from Deck import Deck
+import sys
+sys.path.append(".")
 
-class CardHand(Deck):
+from CardMechanics import Card as cardClass
+from CardMechanics import Deck as deckClass
+
+class CardHand(deckClass.Deck):
 
     """Initialize CardHand object"""
     def __init__(self, deck):
@@ -19,8 +22,8 @@ class CardHand(Deck):
         print("Deck after the two draws: ", self.shuffledDeck)
 
 
-c = Card()
-d = Deck(c)
+c = cardClass.Card()
+d = deckClass.Deck(c)
 ch = CardHand(d)
 ch.drawCard()
 

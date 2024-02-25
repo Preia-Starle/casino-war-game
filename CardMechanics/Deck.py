@@ -1,7 +1,9 @@
 import random
-from Card import Card
+import sys
+sys.path.append(".")
+from CardMechanics import Card as cardClass
 
-class Deck(Card):
+class Deck(cardClass.Card):
 
     """Initialize Deck object"""
     def __init__(self, card):
