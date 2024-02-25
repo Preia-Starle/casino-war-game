@@ -32,7 +32,7 @@ class MenuUI:
 
 
 class TableUI:
-    def table():
+    def table(playerName):
         os.system('cls||clear')
         print(f'{"":*^77}')
         print(f'{"*":<15} {"AI hand"} {".------.":^29} {"*":>23}')
@@ -50,7 +50,7 @@ class TableUI:
         print(f'{"*"} {"| :/⧹: |":^73} {"*"}')
         print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
         print(f'{"*"} {"| `--’C|":^73} {"*"}')
-        print(f'{"*":<22} {"`------’":^30} {"Player hand"} {"*":>11}')
+        print(f'{"*":<22} {"`------’":^30} {" %s’s hand" % (playerName)} {"*":>11}')
         print(f'{"":*^77}')
         
 
