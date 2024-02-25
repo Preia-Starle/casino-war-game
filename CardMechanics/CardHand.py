@@ -9,7 +9,7 @@ class CardHand(deckClass.Deck):
     """Initialize CardHand object"""
     def __init__(self, deck):
         self.playerHand = {}
-        self.AiHand = {}
+        self.aiHand = {}
 
         self.shuffledDeck = deck.shuffleDeck()
 
@@ -17,8 +17,8 @@ class CardHand(deckClass.Deck):
     def drawCard(self):
         print("Original Deck: ", self.shuffledDeck)
         self.playerHand = self.shuffledDeck.popitem()
-        self.AiHand = self.shuffledDeck.popitem()
-        print("Player Hand: ", self.playerHand, "\nAi Hand: ", self.AiHand)
+        self.aiHand = self.shuffledDeck.popitem()
+        print("Player Hand: ", self.playerHand, "\nAi Hand: ", self.aiHand)
         print("Deck after the two draws: ", self.shuffledDeck)
 
 
