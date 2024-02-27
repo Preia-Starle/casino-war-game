@@ -15,14 +15,11 @@ class CardHand(deckClass.Deck):
 
     """Draws one card for the player and one for the AI and removes those cards from the deck"""
     def drawCard(self):
-        # print("Original Deck: ", self.shuffledDeck)
         self.playerHand = self.shuffledDeck.popitem()
         self.aiHand = self.shuffledDeck.popitem()
-        print("Player Hand: ", self.playerHand, "\nAi Hand: ", self.aiHand)
-        print("Deck after the two draws: ", self.shuffledDeck)
-        self.AiHand = self.shuffledDeck.popitem()
-        # print("Player Hand: ", self.playerHand, "\nAi Hand: ", self.AiHand)
-        # print("Deck after the two draws: ", self.shuffledDeck)
+        currentDeck = self.shuffledDeck
+        
+        return currentDeck
 
     
     """Gets the current deck"""
@@ -34,6 +31,8 @@ class CardHand(deckClass.Deck):
 c = cardClass.Card()
 d = deckClass.Deck(c)
 ch = CardHand(d)
+currentDeck = ch.drawCard()
+d.burnCard(currentDeck)
 ch.drawCard()
 
     

@@ -30,7 +30,9 @@ class Deck(cardClass.Card):
         self.shuffledDeck = dict(listDeck)
         return self.shuffledDeck
 
-    def burnCard():
-        pass
+    def burnCard(self, currentDeck):
+        for x in range(3):
+            currentDeck.popitem()
+        return currentDeck
 
     
