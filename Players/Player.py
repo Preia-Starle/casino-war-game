@@ -1,3 +1,7 @@
+import sys
+sys.path.append(".")
+
+from GameMechanics.Scores import Scores 
 
 class Player():
     # player selected nickname
@@ -6,41 +10,43 @@ class Player():
 
 
     def __init__(self, nickname, scores:Scores, balance=0):
-    """ initialise player object with Scores object """
+        """ initialise player object with Scores object """
 
         self.nickname = nickname
         self.balance = balance
         self.scores = scores
 
-        # add player to dictionary with initial balance
-        scores.add
-        self.players[nickname] = balance
+        # add player to scores with initial balance
+        scores.add_score(self.nickname, self.balance)
 
+    def __str__(self):
+        """returns a string containg the name and the score of each player"""
+        # get the __str__ method from the Scores class
+        return str(self.scores)
 
-    @classmethod
-    def addPlayer(cls, nickname, balance=0):
-    """ add new player to players """
+    def addPlayer(self, nickname, balance=0):
+        """ add new player to scores """
 
-        if nickname not in cls.players:
-            cls.players[nickname] = balance
+        self.scores.add_score(nickname, balance)
     
-    @classmethod
-    def updateBalance(cls, nickname, newBalance):
-    """ update player balance after gain/loss """
+    def updateBalance(self, nickname, newBalance):
+        """ update player balance after gain/loss, throws ValueError if the nickname does not exist """
 
-        # if nickname exists in players dict
-        if nickname in cls.players:
-            # update balance
-            cls.players[nickname] = newBalance
-        # if not add him
-        else:
-            cls.addPlayer(nickname, newBalance)
+        try:
+            self.scores.update_score(nickname, newBalance)
 
-        return cls.players
+        except ValueError as e:
+            raise
 
-p = Player("Tibor", 0)
-p.updateBalance("Tibor", 350)
-print(Player.players)  
+
+
+if __name__ == "__main__":
+    s = Scores()
+    p = Player("Tibor", s, 0)
+    p.updateBalance("Tibor", 350)
+    p.addPlayer("Antoine")
+
+    print(p)  
 
 
 

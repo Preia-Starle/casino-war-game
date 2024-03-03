@@ -30,7 +30,23 @@ class Scores():
                 self.leaderboard.pop(i)
                 break;
 
+        # change the player's score
         self.__insert_score_ordered(player_name, player_score)
+
+    def update_score(self, player_name, player_score):
+        """ update player score, throws ValueError if the name does not exist """
+
+        # go through the leaderboard and find the player 
+        for i in range(len(self.leaderboard)):
+            if self.leaderboard[i][0] == player_name:
+
+                # change the player's score
+                self.__insert_score_ordered(player_name, player_score)
+
+                return self.leaderboard
+
+        # raise an execption if the player wasn't found
+        raise ValueError("Player name does noy exist")
 
 
     def __insert_score_ordered(self, player_name, player_score):
@@ -47,13 +63,16 @@ class Scores():
 
         self.leaderboard.insert(index, elt)
 
+    def get_list_of_scores(self):
+        return self.leaderboard
 
-h = Scores()
+if __name__ == "__main__":
+    h = Scores()
 
-h.add_score("Kate", 3000)
-h.add_score("Antoine", 2000)
-h.add_score("Tibor", 1000)
-h.add_score("Antoine", 1500)
+    h.add_score("Kate", 3000)
+    h.add_score("Antoine", 2000)
+    h.add_score("Tibor", 1000)
+    h.add_score("Antoine", 1500)
 
-print(h)
+    print(h)
 
