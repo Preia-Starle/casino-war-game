@@ -1,4 +1,10 @@
 import os
+import sys
+sys.path.append(".")
+
+from CardMechanics import Card as cardClass
+from CardMechanics import Deck as deckClass
+from CardMechanics import CardHand as cardHandClass
 
 class MenuUI:
     def logo():
@@ -10,21 +16,21 @@ class MenuUI:
 | '--'C|| '--'A|| '--'S|| '--'I|| '--'N|| '--'O| ((1)) '--'W|| '--'A|| '--'R|
 `------'`------'`------'`------'`------'`------'  '-'`------'`------'`------'""")
     
-    def mainMenu(self):
-        self.logo()
+    def mainMenu():
+        MenuUI.logo()
         print(f'{"Main menu":.^77}')
         print(f'\n{"1. New Game":^77}')
         print(f'{"2. Leaderboard":^80}')
         print(f'{"3. Exit":^73}')
 
-    def playerNameSelector(self):
-        self.logo()
+    def playerNameSelector():
+        MenuUI.logo()
         print(f'{"Player name selector":.^77}')
         playerName = input(f'\n{"Enter your name: "}')
         return playerName
     
-    def difficultySelector(self):
-        self.logo()
+    def difficultySelector():
+        MenuUI.logo()
         print(f'{"Difficulty selector":.^77}')
         print(f'\n{"1. Easy":^77}')
         print(f'{"2. Normal":^80}')
@@ -32,42 +38,72 @@ class MenuUI:
 
 
 class TableUI:
-    def table(playerName):
+    """Prints out the right card symbol"""
+    def cardSymbol(hand):
+        match hand:
+            case "Spades":
+                print(f'{"*"} {"| :/⧹: |":^73} {"*"}')
+                print(f'{"*"} {"| (⧹/) |":^73} {"*"}')
+
+            case "Clubs":
+                print(f'{"*"} {"| :(): |":^73} {"*"}')
+                print(f'{"*"} {"| ()() |":^73} {"*"}')
+            
+            case "Diamonds":
+                print(f'{"*"} {"| :/⧹: |":^73} {"*"}')
+                print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
+
+            case "Hearts":
+                print(f'{"*"} {"| (⧹/) |":^73} {"*"}')
+                print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
+
+    def table(playerName, playerHand, aiHand):
         os.system('cls||clear')
+        #Table Header
         print(f'{"":*^77}')
-        print(f'{"*":<15} {"AI hand"} {".------.":^29} {"*":>23}')
-        print(f'{"*"} {"|C.--. |":^73} {"*"}')
-        print(f'{"*"} {"| :/⧹: |":^73} {"*"}')
-        print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
-        print(f'{"*"} {"| `--’C|":^73} {"*"}')
+
+        """Prints out AI's card"""
+        print(f'{"*"} {"AI’s hand: %s" % (aiHand[0]) :^73} {"*"}')
+        print(f'{"*"} {".------." :^73} {"*"}')
+        print(f'{"*"} {"|%s.--. |" % (aiHand[0].split(" ")[0][0]) :^73} {"*"}')
+        TableUI.cardSymbol(aiHand[0].split(" ")[2])
+        print(f'{"*"} {"| `--’%s|" % (aiHand[0].split(" ")[0][0]) :^73} {"*"}')      
         print(f'{"*"} {"`------’":^73} {"*"}')
 
         for x in range(3):
             print(f'{"*"} {"":^73} {"*"}')
 
+        """Prints out Player's card"""
         print(f'{"*"} {".------.":^73} {"*"}')
-        print(f'{"*"} {"|C.--. |":^73} {"*"}')
-        print(f'{"*"} {"| :/⧹: |":^73} {"*"}')
-        print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
-        print(f'{"*"} {"| `--’C|":^73} {"*"}')
-        print(f'{"*":<22} {"`------’":^30} {" %s’s hand" % (playerName)} {"*":>11}')
+        print(f'{"*"} {"|%s.--. |" % (playerHand[0].split(" ")[0][0]) :^73} {"*"}')
+        TableUI.cardSymbol(playerHand[0].split(" ")[2])
+        print(f'{"*"} {"| `--’%s|" % (playerHand[0].split(" ")[0][0]) :^73} {"*"}')
+        print(f'{"*"} {"`------’":^73} {"*"}')
+        print(f'{"*"} {"%s’s hand: %s" % (playerName, playerHand[0]) :^73} {"*"}')
         print(f'{"":*^77}')
+
+    
+
         
 
 class Menu:
     def callMenu():
+        c = cardClass.Card()
+        d = deckClass.Deck(c)
+
         difficulty = ""
         menu = MenuUI
+        table = TableUI
         keepMenu = True
 
         while keepMenu:
-            menu.mainMenu(menu)
+            menu.mainMenu()
             choice = int(input("\n>>>>>> "))
 
             match choice:
                 case 1:
-                    playerName = menu.playerNameSelector(menu)
-                    menu.difficultySelector(menu)
+                    playerName = menu.playerNameSelector()
+                    menu.difficultySelector()
                     difficultyChoice = int(input("\n>>>>>> "))
                     while difficultyChoice != 1 or 2 or 3:
                         if difficultyChoice == 1:

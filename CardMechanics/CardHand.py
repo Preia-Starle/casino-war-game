@@ -19,7 +19,7 @@ class CardHand(deckClass.Deck):
         self.aiHand = self.shuffledDeck.popitem()
         currentDeck = self.shuffledDeck
         
-        return currentDeck
+        return self.playerHand, self.aiHand, currentDeck
 
     
     """Gets the current deck"""
@@ -31,8 +31,8 @@ class CardHand(deckClass.Deck):
 c = cardClass.Card()
 d = deckClass.Deck(c)
 ch = CardHand(d)
-currentDeck = ch.drawCard()
-d.burnCard(currentDeck)
+result = ch.drawCard()
+d.burnCard(result[2])
 ch.drawCard()
 
     
