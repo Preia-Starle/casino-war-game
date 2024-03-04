@@ -37,6 +37,9 @@ class Player():
 
         except ValueError as e:
             raise
+    
+    def getPlayerBalance(self):
+        return self.balance
 
 
 

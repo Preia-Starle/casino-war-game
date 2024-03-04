@@ -82,6 +82,14 @@ class TableUI:
         print(f'{"*"} {"%s’s hand: %s" % (playerName, playerHand[0]) :^73} {"*"}')
         print(f'{"":*^77}')
 
+class BetUI:
+    def bet(balance):
+        betAmount = int(input(f'\n{"How much would you like to bet? (Current ammount: %d): " % balance}'))
+        return betAmount
+    
+    def war():
+        choice = input("Would you like to go to war or surrend? (War/Surrend) ")
+        return choice
     
 
         
@@ -103,16 +111,21 @@ class Menu:
             match choice:
                 case 1:
                     playerName = menu.playerNameSelector()
-                    menu.difficultySelector()
-                    difficultyChoice = int(input("\n>>>>>> "))
-                    while difficultyChoice != 1 or 2 or 3:
+                    keepDiffMenu = True
+                    while keepDiffMenu:
+                        menu.difficultySelector()
+                        difficultyChoice = int(input("\n>>>>>> "))
                         if difficultyChoice == 1:
-                            difficulty == "Easy"
+                            difficulty = "Easy"
+                            keepDiffMenu = False
                         elif difficultyChoice == 2:
-                            difficulty == "Normal"
+                            difficulty = "Normal"
+                            keepDiffMenu = False
                         elif difficultyChoice == 3:
-                            difficulty == "Hard"
+                            difficulty = "Hard"
+                            keepDiffMenu = False
                     keepMenu = False
+                    return playerName, difficulty
                 
                 case 2:
                     pass
@@ -120,7 +133,3 @@ class Menu:
                 case 3:
                     # ! Saving the player score and name 
                     keepMenu = False
-
-
-m = Menu
-m.callMenu()

@@ -82,11 +82,11 @@ class Intelligence(cardHandClass.CardHand, deckClass.Deck):
         return surrender
 
     
-c = cardClass.Card()
-d = deckClass.Deck(c)
-ch = cardHandClass.CardHand(d)
-i = Intelligence("medium", d)
-i.decideSurrenderMediumMode()
+#c = cardClass.Card()
+#d = deckClass.Deck(c)
+#ch = cardHandClass.CardHand(d)
+#i = Intelligence("medium", d)
+#i.decideSurrenderMediumMode()
     
             
             

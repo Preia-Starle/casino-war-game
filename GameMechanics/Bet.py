@@ -12,7 +12,7 @@ class Bet():
     """ update balance if win """
     def cardHigher(self, currentBalance, bet):
         # if card higher (win) -> win double the bet
-        currentBalance += 2* bet
+        currentBalance += bet
         return currentBalance
 
     """ update balance if loss """

@@ -1,7 +1,7 @@
-from GameMechanics.UI import MenuUI, TableUI
+from GameMechanics import Game
 
 def main():
-    pass
+    Game.regularGame()
 
 
 
