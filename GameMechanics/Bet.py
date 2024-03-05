@@ -42,5 +42,13 @@ class Bet():
         else:
             hasEnoughBalance = False
         return hasEnoughBalance
+    
+    def goAllIn(self, aiBalance, betPlayer):
+        """ Go all in if player bet larger than ai balance """
+        goAllIn = False
+        if(betPlayer > aiBalance):
+            aiBet = aiBalance
+            goAllIn = True
+        return aiBet, goAllIn
         
 

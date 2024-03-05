@@ -68,14 +68,11 @@ class Intelligence(cardHandClass.CardHand, deckClass.Deck):
     """ Medium difficulty mode: base surrender decision on probability of drawing higher card"""
     def decideSurrenderMediumMode(self, deck):
         surrender = False
-        surrenderThreshold = 50
+        surrenderThreshold = 30
         # get current deck
         currentDeck = deck
-        # calculate probability of a tie: number of the same value cards present/number of outcomes(total cards)
-        print(self.calculateTieProbability(currentDeck))
         # calculate probability of a higher card: (100 - probability of a tie)/2
         higherCardProbablity = self.calculateHigherCardProbability(currentDeck)
-        print(higherCardProbablity)
         # if probability of drawing higher > probability of drawing lower => surrender False, else True
         if higherCardProbablity > surrenderThreshold:
             surrender = False
