@@ -44,9 +44,10 @@ class Game:
                 shuffledDeck = draws[2]
 
                 
-                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck)
+                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai)
                 playerBalance = results[0]
                 shuffledDeck = results[1]
+                aiBalance = results[2]
                 uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
             
             if not shuffledDeck:
@@ -57,36 +58,41 @@ class Game:
                 gameGoing = False
                 uiClass.EndGameUI.zeroBalance()
                 Game.startGameAgain()
-            #elif aiBalance <= 0:
-                #gameGoing = False
-                #uiClass.EndGameUI.aiZeroBalance()
-                #Game.startGameAgain()
+            elif aiBalance <= 0:
+                gameGoing = False
+                uiClass.EndGameUI.aiZeroBalance()
+                Game.startGameAgain()
         
         menuResults = uiClass.Menu.callMenu()
 
 
-    def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck):
-        uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
+    def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai):
+        uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
         if playerHand[1] > aiHand[1]:
             playerBalance = Game.bet.cardHigher(playerBalance, betAmount)
+            # ! Change it to aiBetAmount later
             aiBalance = Game.bet.cardLower(aiBalance, betAmount)
-            return playerBalance, shuffledDeck
+            return playerBalance, shuffledDeck, aiBalance
         elif aiHand[1] > playerHand[1]:
             playerBalance = Game.bet.cardLower(playerBalance, betAmount)
-            return playerBalance, shuffledDeck
+            # ! Change it to aiBetAmount later
+            aiBalance = Game.bet.cardHigher(aiBalance, betAmount)
+            return playerBalance, shuffledDeck, aiBalance
         elif playerHand[1] == aiHand[1]:
-            results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, Game.difficulty)
+            results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai)
             return results
 
 
-    def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty):
+    def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai):
+        # ! Exception handling
         choice = uiClass.BetUI.war()
         if difficulty == "Easy":
-            aiChoice = intellClass.Intelligence.decideSurrenderEasyMode()
+            aiChoice = intellClass.Intelligence.decideSurrenderEasyMode(ai)
         else:
-            aiChoice = intellClass.Intelligence.decideSurrenderMediumMode()
+            aiChoice = intellClass.Intelligence.decideSurrenderMediumMode(ai, shuffledDeck)
     
         if choice.upper() == "WAR":
+            # ! Some nice visual representation what happened
             if aiChoice == False:
                 betAmount = Game.bet.war(betAmount)
                 shuffledDeck = Game.deck.burnCard(shuffledDeck)
@@ -94,27 +100,35 @@ class Game:
                 playerHand = draws[0]
                 aiHand = draws[1]
                 shuffledDeck = draws[2]
+                uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
                 
-                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
+                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai)
                 playerBalance = results[0]
                 shuffledDeck = results[1]
+                aiBalance = results[2]
             elif aiChoice == True:
-                playerBalance = betAmount * 1.5
+                playerBalance += betAmount * 1.5
+                # ! Change it to aiBetAmount later
+                aiBalance = Game.bet.surrend(aiBalance, betAmount)
 
-            return playerBalance, shuffledDeck
+            return playerBalance, shuffledDeck, aiBalance
 
         elif choice.upper() == "SURREND":
+            # ! Some nice visual representation what happened
             if aiChoice == False:
-
+                # ! Change it to aiBetAmount later
+                aiBalance += betAmount * 1.5
+                playerBalance = Game.bet.surrend(playerBalance, betAmount)
             else:
                 playerBalance = Game.bet.surrend(playerBalance, betAmount)
-                aiBalance
-            return playerBalance, shuffledDeck
+                aiBalance = Game.bet.surrend(aiBalance, betAmount)
+            return playerBalance, shuffledDeck, aiBalance
 
 
     def startGameAgain():
         choice = input(print("Would you like to start again? (y/n): "))
         if choice == "y":
+            # ! Reshuffle deck
             Game.regularGame()
 
     

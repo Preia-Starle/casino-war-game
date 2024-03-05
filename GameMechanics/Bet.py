@@ -11,19 +11,19 @@ class Bet():
 
    
     def cardHigher(self, currentBalance, bet):
-         """ Update balance if win """
+        """ Update balance if win """
         # if card higher (win) -> win double the bet
         currentBalance += bet 
         return currentBalance
 
     def cardLower(self, currentBalance, bet):
-         """ Update balance if loss """
+        """ Update balance if loss """
         # if card lower (loss) -> loss of the bet
         currentBalance -= bet
         return currentBalance
     
     def surrend(self, currentBalance, bet):
-         """ Update balance if surrender decision occurs """
+        """ Update balance if surrender decision occurs """
         # loss of half of the bet in case decision to surrender
         currentBalance -= bet/2
         return currentBalance
@@ -34,7 +34,7 @@ class Bet():
         bet += bet
         return bet
 
-    def enoughBalance(self, currentBalance):
+    def enoughBalance(self, bet, currentBalance):
         """ Check that the bet is not higher than the balance """
         hasEnoughBalance = False
         if(bet <= currentBalance):
