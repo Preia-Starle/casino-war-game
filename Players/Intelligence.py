@@ -10,9 +10,12 @@ from collections import defaultdict
 class Intelligence(cardHandClass.CardHand, deckClass.Deck): 
 
     """Initialize Ai player object"""
-    def __init__(self, difficultyMode, deck):
-        self.difficultyMode = difficultyMode
+    def __init__(self, deck, aiBalance):
         self.deck = deck
+        self.aiBalance = aiBalance
+
+    def getAiBalance(self):
+        return self.aiBalance
 
     """ Get occurrences of each rank in the deck """
     def getOccurrences(self, currentDeck):
@@ -59,7 +62,6 @@ class Intelligence(cardHandClass.CardHand, deckClass.Deck):
 
     """ Easy mode: randomize surrender decision"""
     def decideSurrenderEasyMode(self):
-        surrender = False
         surrender = random.choice([True, False])
         return surrender
     
@@ -80,13 +82,6 @@ class Intelligence(cardHandClass.CardHand, deckClass.Deck):
         else:
             surrender = True
         return surrender
-
-    
-#c = cardClass.Card()
-#d = deckClass.Deck(c)
-#ch = cardHandClass.CardHand(d)
-#i = Intelligence("medium", d)
-#i.decideSurrenderMediumMode()
     
             
             

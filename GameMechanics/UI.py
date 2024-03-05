@@ -57,13 +57,13 @@ class TableUI:
                 print(f'{"*"} {"| (⧹/) |":^73} {"*"}')
                 print(f'{"*"} {"| :⧹/: |":^73} {"*"}')
 
-    def table(playerName, playerHand, aiHand, playerBalance):
+    def table(playerName, playerHand, aiHand, playerBalance, aiBalance):
         os.system('cls||clear')
         #Table Header
         print(f'{"":*^77}')
 
         """Prints out AI's card"""
-        print(f'{"*"} {"AI’s balance: %s" % (aiHand[0]) :^73} {"*"}')
+        print(f'{"*"} {"AI’s balance: %d" % (aiBalance) :^73} {"*"}')
         print(f'{"*"} {"AI’s hand: %s" % (aiHand[0]) :^73} {"*"}')
         print(f'{"*"} {".------." :^73} {"*"}')
         print(f'{"*"} {"|%s.--. |" % (aiHand[0].split(" ")[0][0]) :^73} {"*"}')

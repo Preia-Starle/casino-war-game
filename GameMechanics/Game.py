@@ -28,7 +28,8 @@ class Game:
         player = playerClass.Player(playerName, score, 1000)
         playerBalance = playerClass.Player.getPlayerBalance(player)
 
-        ai = intellClass.Intelligence(difficulty, Game.shuffledDeck)
+        ai = intellClass.Intelligence(Game.shuffledDeck, 1000)
+        aiBalance = intellClass.Intelligence.getAiBalance(ai)
 
         gameGoing = True
         while gameGoing:
@@ -43,10 +44,10 @@ class Game:
                 shuffledDeck = draws[2]
 
                 
-                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
+                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck)
                 playerBalance = results[0]
                 shuffledDeck = results[1]
-                uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
+                uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
             
             if not shuffledDeck:
                 gameGoing = False
@@ -64,38 +65,50 @@ class Game:
         menuResults = uiClass.Menu.callMenu()
 
 
-    def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck):
+    def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck):
         uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
         if playerHand[1] > aiHand[1]:
             playerBalance = Game.bet.cardHigher(playerBalance, betAmount)
+            aiBalance = Game.bet.cardLower(aiBalance, betAmount)
             return playerBalance, shuffledDeck
         elif aiHand[1] > playerHand[1]:
             playerBalance = Game.bet.cardLower(playerBalance, betAmount)
             return playerBalance, shuffledDeck
         elif playerHand[1] == aiHand[1]:
-            results = Game.tie(playerName, betAmount, playerBalance, shuffledDeck)
+            results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, Game.difficulty)
             return results
 
 
-    def tie(playerName, betAmount, playerBalance, shuffledDeck):
+    def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty):
         choice = uiClass.BetUI.war()
-        print("Teszt: %d" % playerBalance)
+        if difficulty == "Easy":
+            aiChoice = intellClass.Intelligence.decideSurrenderEasyMode()
+        else:
+            aiChoice = intellClass.Intelligence.decideSurrenderMediumMode()
+    
         if choice.upper() == "WAR":
-            betAmount = Game.bet.war(betAmount)
-            shuffledDeck = Game.deck.burnCard(shuffledDeck)
-            draws = Game.cardHand.drawCard(shuffledDeck)
-            playerHand = draws[0]
-            aiHand = draws[1]
-            shuffledDeck = draws[2]
-            
-            results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
-            playerBalance = results[0]
-            shuffledDeck = results[1]
+            if aiChoice == False:
+                betAmount = Game.bet.war(betAmount)
+                shuffledDeck = Game.deck.burnCard(shuffledDeck)
+                draws = Game.cardHand.drawCard(shuffledDeck)
+                playerHand = draws[0]
+                aiHand = draws[1]
+                shuffledDeck = draws[2]
+                
+                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
+                playerBalance = results[0]
+                shuffledDeck = results[1]
+            elif aiChoice == True:
+                playerBalance = betAmount * 1.5
 
             return playerBalance, shuffledDeck
 
         elif choice.upper() == "SURREND":
-            playerBalance = Game.bet.surrend(playerBalance, betAmount)
+            if aiChoice == False:
+
+            else:
+                playerBalance = Game.bet.surrend(playerBalance, betAmount)
+                aiBalance
             return playerBalance, shuffledDeck
 
 
