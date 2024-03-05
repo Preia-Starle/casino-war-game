@@ -7,7 +7,7 @@ class Player():
     Player has a name and a balance
     """
 
-    def __init__(self, nickname,  balance=0):
+    def __init__(self, nickname,  balance=1000):
         """ initialise player object """
 
         self.nickname = nickname
