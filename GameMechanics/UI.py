@@ -84,13 +84,20 @@ class TableUI:
 
 class BetUI:
     def bet(balance):
-        betAmount = int(input(f'\n{"How much would you like to bet? (Current ammount: %d): " % balance}'))
+        betAmount = int(input(f'\n{"How much would you like to bet? (0 - Quit) (Current ammount: %d):  " % balance}'))
         return betAmount
     
     def war():
         choice = input("Would you like to go to war or surrend? (War/Surrend) ")
         return choice
     
+
+class LeaderboardUI:
+    def leaderboard():
+        MenuUI.logo()
+        print(f'{"Main menu":.^77}')
+        #for player in savedPlayer write out playerName and Score
+        
 
         
 
@@ -101,7 +108,7 @@ class Menu:
 
         difficulty = ""
         menu = MenuUI
-        table = TableUI
+        leaderboard = LeaderboardUI
         keepMenu = True
 
         while keepMenu:
@@ -128,7 +135,13 @@ class Menu:
                     return playerName, difficulty
                 
                 case 2:
-                    pass
+                    keepMenu = False
+                    leaderboard.leaderboard()
+                    print("Press 0 if you would like to go back")
+                    choiceLeaderboard = int(input("\n>>>>>> "))
+                    if choiceLeaderboard == 0:
+                        Menu.callMenu()
+
 
                 case 3:
                     # ! Saving the player score and name 

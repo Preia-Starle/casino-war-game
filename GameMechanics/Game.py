@@ -34,20 +34,25 @@ class Game:
         while gameGoing:
             betAmount = uiClass.BetUI.bet(playerBalance)
 
-            draws = Game.cardHand.drawCard(Game.shuffledDeck)
-            playerHand = draws[0]
-            aiHand = draws[1]
-            shuffledDeck = draws[2]
+            if betAmount == 0:
+                gameGoing = False
+            else:
+                draws = Game.cardHand.drawCard(Game.shuffledDeck)
+                playerHand = draws[0]
+                aiHand = draws[1]
+                shuffledDeck = draws[2]
 
-            
-            results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
-            playerBalance = results[0]
-            shuffledDeck = results[1]
+                
+                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
+                playerBalance = results[0]
+                shuffledDeck = results[1]
             
 
             if not shuffledDeck or playerBalance <= 0:
                 gameGoing = False
-        print(playerBalance)
+        
+        menuResults = uiClass.Menu.callMenu()
+
 
     def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck):
         uiClass.TableUI.table(playerName, playerHand, aiHand)
