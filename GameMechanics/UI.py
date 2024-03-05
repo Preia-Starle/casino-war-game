@@ -101,7 +101,20 @@ class LeaderboardUI:
         #for player in savedPlayer write out playerName and Score
         
 
-        
+class EndGameUI:
+    def zeroBalance():
+        MenuUI.logo()
+        print(f'{"You lost all your money. Better luck next time!":.^77}')
+    
+    def aiZeroBalance():
+        MenuUI.logo()
+        print(f'{"Congratulation! The Computer lost all its money.":.^77}')
+        print(f'{"+1000 points have been added to your score": ^77}')
+
+    def noCardsLeft():
+        MenuUI.logo()
+        print(f'{"Game ended! No more cards left in the deck":.^77}')
+
 
 class Menu:
     def callMenu():

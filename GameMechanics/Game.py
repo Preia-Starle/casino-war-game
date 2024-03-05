@@ -48,9 +48,18 @@ class Game:
                 shuffledDeck = results[1]
                 uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
             
-
-            if not shuffledDeck or playerBalance <= 0:
+            if not shuffledDeck:
                 gameGoing = False
+                uiClass.EndGameUI.noCardsLeft()
+                Game.startGameAgain()
+            elif playerBalance <= 0:
+                gameGoing = False
+                uiClass.EndGameUI.zeroBalance()
+                Game.startGameAgain()
+            #elif aiBalance <= 0:
+                #gameGoing = False
+                #uiClass.EndGameUI.aiZeroBalance()
+                #Game.startGameAgain()
         
         menuResults = uiClass.Menu.callMenu()
 
@@ -89,6 +98,11 @@ class Game:
             playerBalance = Game.bet.surrend(playerBalance, betAmount)
             return playerBalance, shuffledDeck
 
+
+    def startGameAgain():
+        choice = input(print("Would you like to start again? (y/n): "))
+        if choice == "y":
+            Game.regularGame()
 
     
 Game.regularGame()
