@@ -115,6 +115,17 @@ class EndGameUI:
         MenuUI.logo()
         print(f'{"Game ended! No more cards left in the deck":.^77}')
 
+class midGameVisuals:
+    def aiAction(aiDecision):
+        notSurrend = "Ai decided not to surrend"
+        surrend = "Ai decided to surrend"
+        print(surrend if aiDecision else notSurrend)
+
+    def winIndecator(indicator):
+        win = "You won this round!"
+        lose = "You lost this round!"
+        print(win if indicator else lose)
+
 
 class Menu:
     def callMenu():

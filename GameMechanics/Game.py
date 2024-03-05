@@ -48,7 +48,11 @@ class Game:
                 playerBalance = results[0]
                 shuffledDeck = results[1]
                 aiBalance = results[2]
+                indicator = results[3]
                 uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
+                
+                if indicator != "Draw":
+                    uiClass.midGameVisuals.winIndecator(indicator)
             
             if not shuffledDeck:
                 gameGoing = False
@@ -67,17 +71,19 @@ class Game:
 
 
     def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai):
+        indicator = True
         uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
         if playerHand[1] > aiHand[1]:
             playerBalance = Game.bet.cardHigher(playerBalance, betAmount)
             # ! Change it to aiBetAmount later
             aiBalance = Game.bet.cardLower(aiBalance, betAmount)
-            return playerBalance, shuffledDeck, aiBalance
+            return playerBalance, shuffledDeck, aiBalance, indicator
         elif aiHand[1] > playerHand[1]:
+            indicator = False
             playerBalance = Game.bet.cardLower(playerBalance, betAmount)
             # ! Change it to aiBetAmount later
             aiBalance = Game.bet.cardHigher(aiBalance, betAmount)
-            return playerBalance, shuffledDeck, aiBalance
+            return playerBalance, shuffledDeck, aiBalance, indicator
         elif playerHand[1] == aiHand[1]:
             results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai)
             return results
@@ -106,12 +112,14 @@ class Game:
                 playerBalance = results[0]
                 shuffledDeck = results[1]
                 aiBalance = results[2]
+                indicator = results[3]
             elif aiChoice == True:
                 playerBalance += betAmount * 1.5
                 # ! Change it to aiBetAmount later
                 aiBalance = Game.bet.surrend(aiBalance, betAmount)
+                indicator = "Draw"
 
-            return playerBalance, shuffledDeck, aiBalance
+            return playerBalance, shuffledDeck, aiBalance, indicator
 
         elif choice.upper() == "SURREND":
             # ! Some nice visual representation what happened
@@ -119,20 +127,19 @@ class Game:
                 # ! Change it to aiBetAmount later
                 aiBalance += betAmount * 1.5
                 playerBalance = Game.bet.surrend(playerBalance, betAmount)
+                indicator = "Draw"
             else:
                 playerBalance = Game.bet.surrend(playerBalance, betAmount)
                 aiBalance = Game.bet.surrend(aiBalance, betAmount)
-            return playerBalance, shuffledDeck, aiBalance
+                indicator = "Draw"
+            return playerBalance, shuffledDeck, aiBalance, indicator
 
 
     def startGameAgain():
         choice = input(print("Would you like to start again? (y/n): "))
         if choice == "y":
-            # ! Reshuffle deck
+            Game.shuffledDeck = Game.deck.shuffleDeck()
             Game.regularGame()
-
-    
-Game.regularGame()
     
 
     

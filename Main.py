@@ -1,7 +1,7 @@
 from GameMechanics import Game
 
 def main():
-    Game.regularGame()
+    Game.Game.regularGame()
 
 
 
