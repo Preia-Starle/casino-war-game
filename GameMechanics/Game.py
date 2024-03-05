@@ -24,11 +24,11 @@ class Game:
         playerName = menuResults[0]
         difficulty = menuResults[1]
 
-        
-
         score = scoresClass.Scores()
         player = playerClass.Player(playerName, score, 1000)
         playerBalance = playerClass.Player.getPlayerBalance(player)
+
+        ai = intellClass.Intelligence(difficulty, Game.shuffledDeck)
 
         gameGoing = True
         while gameGoing:
@@ -46,6 +46,7 @@ class Game:
                 results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck)
                 playerBalance = results[0]
                 shuffledDeck = results[1]
+                uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
             
 
             if not shuffledDeck or playerBalance <= 0:
@@ -55,7 +56,7 @@ class Game:
 
 
     def whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, betAmount, shuffledDeck):
-        uiClass.TableUI.table(playerName, playerHand, aiHand)
+        uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance)
         if playerHand[1] > aiHand[1]:
             playerBalance = Game.bet.cardHigher(playerBalance, betAmount)
             return playerBalance, shuffledDeck
