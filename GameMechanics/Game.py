@@ -88,6 +88,14 @@ class Game:
                 Game.startGameAgain()
         
         menuResults = uiClass.Menu.callMenu()
+    
+    """Check if AI has enough balance"""
+    def aiHasEnoughBalance(betAmount, aiBalance):
+        allInCheck = betClass.Bet.goAllIn(Game.bet, aiBalance, betAmount)
+        aiBetAmount = allInCheck[0]
+
+        return aiBetAmount
+
 
 
     """Decides who won the round"""
@@ -95,14 +103,13 @@ class Game:
         indicator = True
         uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
 
-
+        aiBetAmount = Game.aiHasEnoughBalance(betAmount, aiBalance)
 
         """Round outcomes"""
         if playerHand[1] > aiHand[1]:
             """Player won"""
             playerBalance = Game.bet.cardHigher(playerBalance, betAmount)
-            # ! Change it to aiBetAmount later
-            aiBalance = Game.bet.cardLower(aiBalance, betAmount)
+            aiBalance = Game.bet.cardLower(aiBalance, aiBetAmount)
 
             return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision
         
@@ -110,8 +117,7 @@ class Game:
             """Ai won"""
             indicator = False
             playerBalance = Game.bet.cardLower(playerBalance, betAmount)
-            # ! Change it to aiBetAmount later
-            aiBalance = Game.bet.cardHigher(aiBalance, betAmount)
+            aiBalance = Game.bet.cardHigher(aiBalance, aiBetAmount)
 
             return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision
         
@@ -123,7 +129,6 @@ class Game:
 
     """Checks wether the player or the AI would like to go to war"""
     def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai):
-        # ! Exception handling
         choice = uiClass.BetUI.war()
 
         """Checks if player has enough balance to go to war"""
@@ -134,12 +139,20 @@ class Game:
                 time.sleep(5)
                 choice = "SURREND"
 
-
-        """AI decision based on the selected difficulty"""
-        if difficulty == "Easy":
-            aiChoice = intellClass.Intelligence.decideSurrenderEasyMode(ai)
+        """Checks if AI has enough balance to go to war"""       
+        aiHasEnoughBalance = betClass.Bet.enoughBalance(Game.bet, betAmount*2, aiBalance)
+        if not aiHasEnoughBalance:
+            print("AI doesn't have enough balance to go to war! It must surrend!")
+            time.sleep(5)
+            aiChoice = True
         else:
-            aiChoice = intellClass.Intelligence.decideSurrenderMediumMode(ai, shuffledDeck)
+            """AI decision based on the selected difficulty"""
+            if difficulty == "Easy":
+                aiChoice = intellClass.Intelligence.decideSurrenderEasyMode(ai)
+            else:
+                aiChoice = intellClass.Intelligence.decideSurrenderMediumMode(ai, shuffledDeck)
+
+        aiBetAmount = Game.aiHasEnoughBalance(betAmount, aiBalance)
 
         """Outcomes"""
         if choice.upper() == "WAR":
@@ -166,8 +179,7 @@ class Game:
                 """AI chose to surrend"""
                 aiDecision = 1
                 playerBalance += betAmount * 1.5
-                # ! Change it to aiBetAmount later
-                aiBalance = Game.bet.surrend(aiBalance, betAmount)
+                aiBalance = Game.bet.surrend(aiBalance, aiBetAmount)
                 indicator = "Draw"
 
             return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision
@@ -177,9 +189,8 @@ class Game:
             """Player chose to surrend"""
             if aiChoice == False:
                 """AI chose to go to war"""
-                # ! Change it to aiBetAmount later
                 aiDecision = 0
-                aiBalance += betAmount * 1.5
+                aiBalance += aiBetAmount * 1.5
                 playerBalance = Game.bet.surrend(playerBalance, betAmount)
                 indicator = "Draw"
 
@@ -187,7 +198,7 @@ class Game:
                 """AI chose to surrend"""
                 aiDecision = 1
                 playerBalance = Game.bet.surrend(playerBalance, betAmount)
-                aiBalance = Game.bet.surrend(aiBalance, betAmount)
+                aiBalance = Game.bet.surrend(aiBalance, aiBetAmount)
                 indicator = "Draw"
 
             return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision

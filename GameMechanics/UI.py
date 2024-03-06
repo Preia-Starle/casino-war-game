@@ -115,7 +115,7 @@ class EndGameUI:
     
     def aiZeroBalance():
         MenuUI.logo()
-        print(f'{"Congratulation! The Computer lost all its money.":.^77}')
+        print(f'{"Congratulation! The AI lost all its money.":.^77}')
         print(f'{"+1000 points have been added to your score": ^77}')
 
     def noCardsLeft():
