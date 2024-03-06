@@ -61,6 +61,61 @@ class TestBet(unittest.TestCase):
         # make sure the expected balance and class method output same
         self.assertEqual(updatedBet, expectedOutput)
 
+    def testEnoughBalance(self):
+        """ Test that check that the bet is not higher than the balance works """
+        # assign test values
+        currentBalance = 1000
+        bet = 10
+        hasEnoughBalance = False
+        # if bet bet smaller than balance assign true else false
+        if(bet <= currentBalance):
+            hasEnoughBalance = True
+        else:
+            hasEnoughBalance = False
+        expectedOutput = hasEnoughBalance
+        # instantiate class
+        betInstance = betClass.Bet()
+        # call the method from the class
+        classMethodOutput = betInstance.enoughBalance(bet, currentBalance)
+        # make sure the expected balance and class method output same
+        self.assertEqual(classMethodOutput, expectedOutput)
+
+    def testGoAllInBoolean(self):
+        """ Test go all in if player bet larger than ai balance returns correct boolean """
+        betPlayer = 30
+        aiBalance = 500
+        if(betPlayer > aiBalance):
+            goAllIn = True
+        else:
+            goAllIn = False
+        expectedOutput = goAllIn
+        # instantiate class
+        betInstance = betClass.Bet()
+        # call the method from the class
+        *_, booleanOutput = betInstance.goAllIn(aiBalance, betPlayer)
+        # make sure the expected balance and class method output same
+        self.assertEqual(booleanOutput, expectedOutput)
+    
+    def testGoAllInBetUpdate(self):
+        """ Test that aiBet updated to go all in if player bet larger than ai balance """
+        betPlayer = 30
+        aiBalance = 20
+        if(betPlayer > aiBalance):
+            aiBet = aiBalance
+        else:
+            aiBet = betPlayer
+        expectedOutput = aiBet
+        # instantiate class
+        betInstance = betClass.Bet()
+        # call the method from the class
+        classMethodOutput,*_ = betInstance.goAllIn(betPlayer, aiBalance)
+        # make sure the expected balance and class method output same
+        self.assertEqual(classMethodOutput, expectedOutput)
+
+
+
+
+
         
 
         
