@@ -4,7 +4,7 @@ sys.path.append(".")
 
 from CardMechanics import Card as cardClass
 from CardMechanics import Deck as deckClass
-from CardMechanics import CardHand as cardHandClass
+from GameMechanics import Bet as betClass
 
 class MenuUI:
     def logo():
@@ -86,7 +86,14 @@ class TableUI:
 
 class BetUI:
     def bet(balance):
-        betAmount = int(input(f'\n{"How much would you like to bet? (0 - Quit) (Current ammount: %d):  " % balance}'))
+        betAmount = 0
+        betSelf = betClass.Bet
+        hasEnoughBalance = False
+        while not hasEnoughBalance:
+            betAmount = int(input(f'\n{"How much would you like to bet? (0 - Quit) (Current ammount: %d):  " % balance}'))
+            hasEnoughBalance = betSelf.enoughBalance(betSelf, betAmount, balance)
+            if not hasEnoughBalance:
+                print("You don't have enough balance to make that bet!")
         return betAmount
     
     def war():

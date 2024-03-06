@@ -1,4 +1,4 @@
-import sys
+import sys, time
 sys.path.append(".")
 
 from CardMechanics import Card as cardClass
@@ -28,8 +28,8 @@ class Game:
 
         """Creates player and AI object"""
         score = scoresClass.Scores()
-        player = playerClass.Player(playerName, score, 1000)
-        playerBalance = playerClass.Player.getPlayerBalance(player)
+        player = playerClass.Player(playerName)
+        playerBalance = playerClass.Player.get_balance(player)
 
         ai = intellClass.Intelligence(Game.shuffledDeck, 1000)
         aiBalance = intellClass.Intelligence.getAiBalance(ai)
@@ -95,6 +95,8 @@ class Game:
         indicator = True
         uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
 
+
+
         """Round outcomes"""
         if playerHand[1] > aiHand[1]:
             """Player won"""
@@ -123,6 +125,15 @@ class Game:
     def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai):
         # ! Exception handling
         choice = uiClass.BetUI.war()
+
+        """Checks if player has enough balance to go to war"""
+        if choice.upper() == "WAR":
+            hasEnoughBalance = betClass.Bet.enoughBalance(Game.bet, betAmount*2, playerBalance)
+            if not hasEnoughBalance:
+                print("You don't have enough balance to go to war! You must surrend!")
+                time.sleep(5)
+                choice = "SURREND"
+
 
         """AI decision based on the selected difficulty"""
         if difficulty == "Easy":
