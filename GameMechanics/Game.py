@@ -27,7 +27,6 @@ class Game:
         difficulty = menuResults[1]
 
         """Creates player and AI object"""
-        score = scoresClass.Scores()
         player = playerClass.Player(playerName)
         playerBalance = playerClass.Player.get_balance(player)
 
@@ -42,40 +41,41 @@ class Game:
             if betAmount == 0:
                 gameGoing = False
             else:
-                """Draws a card for both the player and ai"""
-                draws = Game.cardHand.drawCard(Game.shuffledDeck)
-                playerHand = draws[0]
-                aiHand = draws[1]
-                shuffledDeck = draws[2]
+                """Checks if there are enough card left in deck"""
+                enoughCards = Game.cardHand.enoughCardsInDeck(Game.shuffledDeck)
+                if enoughCards:
+                    """Draws a card for both the player and ai"""
+                    draws = Game.cardHand.drawCard(Game.shuffledDeck)
+                    playerHand = draws[0]
+                    aiHand = draws[1]
+                    shuffledDeck = draws[2]
 
-                """Calls 'whosCardIsHigher' method and returned values gets assigned to variables"""
-                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai, aiDecision=3)
-                playerBalance = results[0]
-                shuffledDeck = results[1]
-                aiBalance = results[2]
-                indicator = results[3]
-                aiDecision = results[4]
+                    """Calls 'whosCardIsHigher' method and returned values gets assigned to variables"""
+                    results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, shuffledDeck, difficulty, ai, aiDecision=3)
+                    playerBalance = results[0]
+                    shuffledDeck = results[1]
+                    aiBalance = results[2]
+                    indicator = results[3]
+                    aiDecision = results[4]
 
-                """Prints out table"""
-                uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
-                
-                """If the outcome is not a tie, writes out who won"""
-                if indicator != "Draw":
-                    uiClass.midGameVisuals.winIndecator(indicator)
-                
-                """If the outcome is a tie, writes out ai's decision"""
-                if aiDecision != 3:
-                    uiClass.midGameVisuals.aiAction(aiDecision)
-            
+                    """Prints out table"""
+                    uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
+                    
+                    """If the outcome is not a tie, writes out who won"""
+                    if indicator != "Draw":
+                        uiClass.midGameVisuals.winIndecator(indicator)
+                    
+                    """If the outcome is a tie, writes out ai's decision"""
+                    if aiDecision != 3:
+                        uiClass.midGameVisuals.aiAction(aiDecision)
+                else:
+                    """No card left in the deck"""
+                    gameGoing = False
+                    uiClass.EndGameUI.noCardsLeft()
+                    Game.startGameAgain() 
 
             """Game ending scenarios"""
-            if not shuffledDeck:
-                """No card left in the deck"""
-                gameGoing = False
-                uiClass.EndGameUI.noCardsLeft()
-                Game.startGameAgain() 
-
-            elif playerBalance <= 0:
+            if playerBalance <= 0:
                 """Player lost all of its balance""" 
                 gameGoing = False
                 uiClass.EndGameUI.zeroBalance()
@@ -122,10 +122,18 @@ class Game:
             return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision
         
         elif playerHand[1] == aiHand[1]:
-            """Its a tie, 'tie' method gets called"""
-            results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai)
+            """Checks if there are enough cards for a war"""
+            enoughCardsForWar = Game.cardHand.enoughCardsInDeckWar(Game.shuffledDeck)
+            if enoughCardsForWar:
+                """Its a tie, 'tie' method gets called"""
+                results = Game.tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai)
 
-            return results
+                return results
+            else:
+                print("Not enough cards left in deck to initiate war! Bets refunded")
+                time.sleep(5)
+                indicator = "Draw"
+                return playerBalance, shuffledDeck, aiBalance, indicator, aiDecision
 
     """Checks wether the player or the AI would like to go to war"""
     def tie(playerName, betAmount, playerBalance, aiBalance, shuffledDeck, difficulty, ai):

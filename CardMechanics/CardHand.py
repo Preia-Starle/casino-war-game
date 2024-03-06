@@ -20,24 +20,19 @@ class CardHand(deckClass.Deck):
         
         return self.playerHand, self.aiHand, currentDeck
 
-    def enoughCardsInDeck(self, currentDeck, playerHand, aiHand):
+    def enoughCardsInDeck(self, currentDeck):
         """ check if enough cards in the deck to continue playing """
-        isEnoughCardsinDeck = False
-        # in case of a tie
-        if(playerHand == aiHand):
-            # if there is less cards than 5
-            if(len(currentDeck) < 5):
-                # not enough cards in deck
-                isEnoughCardsInDeck = False
-            else:
-                # enough cards in deck
-                isEnoughCardsInDeck = True
-        elif(len(currentDeck) < 2):
+        if(len(currentDeck) < 2):
             # not enough cards in deck
-            isEnoughCardsInDeck = False
+            return False
         else:
-            isEnoughCardsInDeck = True
-        return isEnoughCardsInDeck
+            return True
+    
+    def enoughCardsInDeckWar(self, currentDeck):
+        if (len(currentDeck) < 5):
+            return False
+        else:
+            return True
 
 
 
