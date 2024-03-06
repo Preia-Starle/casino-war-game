@@ -1,53 +1,40 @@
 import sys
 sys.path.append(".")
 
-from GameMechanics.Scores import Scores 
 
 class Player():
-    # player selected nickname
-    nickname = ""
-    balance = 0
+    """
+    Player has a name and a balance
+    """
 
-
-    def __init__(self, nickname, scores:Scores, balance=0):
-        """ initialise player object with Scores object """
+    def __init__(self, nickname,  balance=1000):
+        """ initialise player object """
 
         self.nickname = nickname
         self.balance = balance
-        self.scores = scores
 
-        # add player to scores with initial balance
-        scores.add_score(self.nickname, self.balance)
 
     def __str__(self):
-        """returns a string containg the name and the score of each player"""
-        # get the __str__ method from the Scores class
-        return str(self.scores)
-
-    def addPlayer(self, nickname, balance=0):
-        """ add new player to scores """
-
-        self.scores.add_score(nickname, balance)
+        """ returns a string containg the name and the score of the player """
+        return f"{self.nickname} -- {self.balance:,d}$"
     
-    def updateBalance(self, nickname, newBalance):
-        """ update player balance after gain/loss, throws ValueError if the nickname does not exist """
 
-        try:
-            self.scores.update_score(nickname, newBalance)
+    def update_balance(self, new_balance):
+        """ set new balance """
+        self.balance = new_balance
 
-        except ValueError as e:
-            raise
-    
-    def getPlayerBalance(self):
+
+    def get_balance(self):
         return self.balance
 
 
+    def get_name(self):
+        return self.nickname
+
 
 if __name__ == "__main__":
-    s = Scores()
-    p = Player("Tibor", s, 0)
-    p.updateBalance("Tibor", 350)
-    p.addPlayer("Antoine")
+    p = Player("Antoine", 0)
+    p.update_balance(50000)
 
     print(p)  
 
