@@ -1,3 +1,4 @@
+import pickle
 import sys
 sys.path.append(".")
 
@@ -25,6 +26,17 @@ class Scores():
 
         # use Player's __str__ method
         return "\n".join([str(p) for p in self.leaderboard])
+
+    def update(self):
+        """Get previous scores saved in GameMechanics/scores.bin"""
+        with open("GameMechanics/scores.bin", "rb") as previous_scores :
+            self.leaderboard = pickle.load(previous_scores)
+
+
+    def save(self):
+        """Save scores to GameMechanics/scores.bin"""
+        with open("GameMechanics/scores.bin", "wb") as scores_file :
+            pickle.dump(self.leaderboard, scores_file)
 
 
     def add_player(self, player:Player):
@@ -81,6 +93,7 @@ class Scores():
 
 
 if __name__ == "__main__":
+    # everything seems to work fine
 
     a = Player("Antoine", 500)
     t = Player("Tibor", 1000)
@@ -93,5 +106,13 @@ if __name__ == "__main__":
     h.add_player(t)
     h.update_player_balance(a, 2000)
 
+    h.save()
+
     print(h)
+
+    s = Scores()
+    s.update()
+
+    print(s)
+
 
