@@ -21,8 +21,9 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
         self.assertEqual(cardHandInstance.shuffledDeck, testDeck)
 
 
-    """Test Draws one card for the player and one for the AI and removes those cards from the deck"""
+    
     def testDrawCard(self):
+        """Test Draws one card for the player and one for the AI and removes those cards from the deck"""
         # create test deck object
         testDeck = {"heart": 2, "diamond": 3 ,"club": 5}
         # create test deck copy to retain the original object
@@ -38,6 +39,33 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
         self.assertEqual(playerHandOutput, expectedPlayerHand) 
         self.assertEqual(aiHandOutput, expectedAiHand)
         self.assertEqual(deckOutput,originalTestDeck)
+
+
+    def testEnoughCardsInDeck(self):
+        """ Test check if enough cards in the deck to continue playing """
+        playerHand = (cardClass.Card(), "heart")
+        aiHand = (cardClass.Card(), "heart")
+        # create test deck object
+        testDeck = [(cardClass.Card(), "heart"), (cardClass.Card(), "diamond"), (cardClass.Card(), "club")]
+        currentDeck = testDeck
+        # in case of a tie
+        if(playerHand == aiHand):
+            # if there is less cards than 5
+            if(len(currentDeck) < 5):
+                # not enough cards in deck
+                isEnoughCardsInDeck = False
+            else:
+                # enough cards in deck
+                isEnoughCardsInDeck = True
+        elif(len(currentDeck) < 2):
+            # not enough cards in deck
+            isEnoughCardsInDeck = False
+        else:
+            isEnoughCardsInDeck = True
+        # create instance of the cardHand class, pass the test deck copy
+        cardHandInstance = cardHandClass.CardHand(testDeck.copy())
+        methodOutput = cardHandInstance.enoughCardsInDeck(playerHand, aiHand, currentDeck)
+        self.assertEqual(isEnoughCardsInDeck, methodOutput)
 
 
 
