@@ -128,6 +128,10 @@ class TestDeck(unittest.TestCase, cardClass.Card):
 
         methodOutput = deckInstance.burnCard(testDeckCopy)
         self.assertEqual(expectedOutput, methodOutput)
+
+
+if __name__ == '__main__':
+    unittest.main()
             
             
 
