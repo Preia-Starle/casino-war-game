@@ -27,6 +27,12 @@ class Scores():
         # use Player's __str__ method
         return "\n".join([str(p) for p in self.leaderboard])
 
+    def __eq__(self, other):
+        """returns True if the other class has the same leaderboard, returns False otherwise"""
+        if isinstance(other, Scores):
+            return other.leaderboard == self.leaderboard
+        return False
+
     def update(self):
         """Get previous scores saved in GameMechanics/scores.bin"""
         with open("GameMechanics/scores.bin", "rb") as previous_scores :
@@ -90,29 +96,5 @@ class Scores():
     def get_names(self):
         """ returns list of all names """
         return [p.get_name() for p in self.leaderboard]
-
-
-if __name__ == "__main__":
-    # everything seems to work fine
-
-    a = Player("Antoine", 500)
-    t = Player("Tibor", 1000)
-    k = Player("Kate", 1500)
-
-
-    h = Scores()
-    h.add_player(a)
-    h.add_player(k)
-    h.add_player(t)
-    h.update_player_balance(a, 2000)
-
-    h.save()
-
-    print(h)
-
-    s = Scores()
-    s.update()
-
-    print(s)
 
 

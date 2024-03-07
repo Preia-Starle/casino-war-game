@@ -17,6 +17,11 @@ class Player():
     def __str__(self):
         """ returns a string containg the name and the score of the player """
         return f"{self.nickname} -- {self.balance:,d}$"
+
+    def __eq__(self, other):
+        if isinstance(other, Player):
+            return self.nickname == other.nickname and self.balance == other.balance
+        return False
     
 
     def update_balance(self, new_balance):
@@ -30,13 +35,6 @@ class Player():
 
     def get_name(self):
         return self.nickname
-
-
-if __name__ == "__main__":
-    p = Player("Antoine", 0)
-    p.update_balance(50000)
-
-    print(p)  
 
 
 
