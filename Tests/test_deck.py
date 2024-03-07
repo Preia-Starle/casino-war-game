@@ -35,3 +35,32 @@ class TestDeck(unittest.TestCase, cardClass.Card):
         self.assertEqual(deckInstance.cards, cardInstance.testCards)
         self.assertEqual(deckInstance.suits, cardInstance.testSuits)
 
+
+    def testCreateDeck(self):
+        """Test create deck"""
+         # create test card object
+        cardInstance = cardClass.Card()
+        cardInstance.testCards = {
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "Jack": 11,
+            "Queen": 12,
+            "King": 13,
+            "Ace": 14}
+        cardInstance.testSuits = ["Diamonds", "Hearts", "Clubs", "Spades"]
+        # call the constructor and pass the test card object
+        deckInstance = deckClass.Deck(cardInstance)
+        for cardName, cardValue in cardInstance.testCards.items():
+            for suit in cardInstance.testSuits:
+                deckInstance.deck[cardName + " of " + suit] = cardValue
+        expectedOutput = deckInstance.deck
+        methodOutput = deckInstance.createDeck()
+        self.assertEqual(expectedOutput, methodOutput)
+
