@@ -43,29 +43,37 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
 
     def testEnoughCardsInDeck(self):
         """ Test check if enough cards in the deck to continue playing """
-        playerHand = (cardClass.Card(), "heart")
-        aiHand = (cardClass.Card(), "heart")
         # create test deck object
         testDeck = [(cardClass.Card(), "heart"), (cardClass.Card(), "diamond"), (cardClass.Card(), "club")]
-        currentDeck = testDeck
-        # in case of a tie
-        if(playerHand == aiHand):
-            # if there is less cards than 5
-            if(len(currentDeck) < 5):
-                # not enough cards in deck
-                isEnoughCardsInDeck = False
-            else:
-                # enough cards in deck
-                isEnoughCardsInDeck = True
-        elif(len(currentDeck) < 2):
+        # if less than 2 cards in deck
+        if(len(testDeck) < 2):
             # not enough cards in deck
             isEnoughCardsInDeck = False
         else:
+            # enough cards in deck
             isEnoughCardsInDeck = True
         # create instance of the cardHand class, pass the test deck copy
-        cardHandInstance = cardHandClass.CardHand(testDeck.copy())
-        methodOutput = cardHandInstance.enoughCardsInDeck(playerHand, aiHand, currentDeck)
+        cardHandInstance = cardHandClass.CardHand(testDeck)
+        methodOutput = cardHandInstance.enoughCardsInDeck(testDeck)
         self.assertEqual(isEnoughCardsInDeck, methodOutput)
+
+
+    def testEnoughCardsInDeckWar(self):
+        """ Test check if enough cards in the deck to continue playing in case of war decision """
+        # create test deck object
+        testDeck = [(cardClass.Card(), "heart"), (cardClass.Card(), "diamond"), (cardClass.Card(), "club")]
+        # if there is less cards than 5
+        if(len(testDeck) < 5):
+            # not enough cards in deck
+            isEnoughCardsInDeck = False
+        else:
+            # enough cards in deck
+            isEnoughCardsInDeck = True
+        # create instance of the cardHand class, pass the test deck copy
+        cardHandInstance = cardHandClass.CardHand(testDeck)
+        methodOutput = cardHandInstance.enoughCardsInDeckWar(testDeck)
+        self.assertEqual(isEnoughCardsInDeck, methodOutput)
+
 
 
 
