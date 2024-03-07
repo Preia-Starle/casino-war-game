@@ -2,6 +2,7 @@ import sys
 sys.path.append(".")
 
 import unittest
+import random
 from CardMechanics import Card as cardClass
 from CardMechanics import Deck as deckClass
 
@@ -62,5 +63,37 @@ class TestDeck(unittest.TestCase, cardClass.Card):
                 deckInstance.deck[cardName + " of " + suit] = cardValue
         expectedOutput = deckInstance.deck
         methodOutput = deckInstance.createDeck()
+        self.assertEqual(expectedOutput, methodOutput)
+
+    
+    def testShuffleDeck(self):
+        """Test Shuffle deck"""
+         # create test card object
+        cardInstance = cardClass.Card()
+        cardInstance.testCards = {
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "Jack": 11,
+            "Queen": 12,
+            "King": 13,
+            "Ace": 14}
+        cardInstance.testSuits = ["Diamonds", "Hearts", "Clubs", "Spades"]
+        # call the constructor and pass the test card object
+        deckInstance = deckClass.Deck(cardInstance)
+        deck = deckInstance.createDeck()
+        listDeck = list(deck.items())
+
+        random.shuffle(listDeck)
+        deckInstance.shuffledDeck = dict(listDeck)
+        expectedOutput = deckInstance.shuffledDeck
+
+        methodOutput = deckInstance.shuffleDeck()
         self.assertEqual(expectedOutput, methodOutput)
 
