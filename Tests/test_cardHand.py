@@ -42,7 +42,7 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
 
 
     def testEnoughCardsInDeck(self):
-        """ Test check if enough cards in the deck to continue playing """
+        """ Test check if enough cards in the deck to play - case: enough cards """
         # create test deck object
         testDeck = [(cardClass.Card(), "heart"), (cardClass.Card(), "diamond"), (cardClass.Card(), "club")]
         # if less than 2 cards in deck
@@ -58,8 +58,25 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
         self.assertEqual(isEnoughCardsInDeck, methodOutput)
 
 
+    def testNotEnoughCardsInDeck(self):
+        """ Test check if enough cards in the deck to play - case: not enough cards """
+        # create test deck object
+        testDeck = [(cardClass.Card(), "heart")]
+        # if less than 2 cards in deck
+        if(len(testDeck) < 2):
+            # not enough cards in deck
+            isEnoughCardsInDeck = False
+        else:
+            # enough cards in deck
+            isEnoughCardsInDeck = True
+        # create instance of the cardHand class, pass the test deck copy
+        cardHandInstance = cardHandClass.CardHand(testDeck)
+        methodOutput = cardHandInstance.enoughCardsInDeck(testDeck)
+        self.assertEqual(isEnoughCardsInDeck, methodOutput)
+
+
     def testEnoughCardsInDeckWar(self):
-        """ Test check if enough cards in the deck to continue playing in case of war decision """
+        """ Test check if enough cards in the deck for war - case not enough cards """
         # create test deck object
         testDeck = [(cardClass.Card(), "heart"), (cardClass.Card(), "diamond"), (cardClass.Card(), "club")]
         # if there is less cards than 5
@@ -75,8 +92,19 @@ class TestCardHand(unittest.TestCase, deckClass.Deck, cardClass.Card):
         self.assertEqual(isEnoughCardsInDeck, methodOutput)
 
 
+    def testNotEnoughCardsInDeckWar(self):
+        """ Test check if enough cards in the deck for war - case enough cards """
+        # create test deck object
+        testDeck = [(cardClass.Card(), "heart5"), (cardClass.Card(), "diamond2"), (cardClass.Card(), "club5"), (cardClass.Card(), "club7"), (cardClass.Card(), "diamond5"), (cardClass.Card(), "heart8")]
+        # if there is less cards than 5
+        if(len(testDeck) < 5):
+            # not enough cards in deck
+            isEnoughCardsInDeck = False
+        else:
+            # enough cards in deck
+            isEnoughCardsInDeck = True
+        # create instance of the cardHand class, pass the test deck copy
+        cardHandInstance = cardHandClass.CardHand(testDeck)
+        methodOutput = cardHandInstance.enoughCardsInDeckWar(testDeck)
+        self.assertEqual(isEnoughCardsInDeck, methodOutput)
 
-
-
-if __name__ == '__main__':
-    unittest.main()

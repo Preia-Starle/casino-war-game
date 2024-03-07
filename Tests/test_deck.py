@@ -130,8 +130,6 @@ class TestDeck(unittest.TestCase, cardClass.Card):
         self.assertEqual(expectedOutput, methodOutput)
 
 
-if __name__ == '__main__':
-    unittest.main()
             
             
 

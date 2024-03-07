@@ -47,7 +47,7 @@ class TestCard(unittest.TestCase):
             "King": 13,
             "Ace": 14}
         cardInstance = cardClass.Card()
-        methodOutput = cardInstance.cards
+        methodOutput = cardInstance.getCards()
         self.assertEqual(methodOutput, testCards)
     
     
@@ -55,8 +55,7 @@ class TestCard(unittest.TestCase):
         """ Test suits are being returned """
         testSuits = ["Diamonds", "Hearts", "Clubs", "Spades"]
         cardInstance = cardClass.Card()
-        methodOutput = cardInstance.suits  
+        methodOutput = cardInstance.getSuits()  
         self.assertEqual(methodOutput, testSuits)  
 
-if __name__ == '__main__':
-    unittest.main()    
+   
