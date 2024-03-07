@@ -97,3 +97,37 @@ class TestDeck(unittest.TestCase, cardClass.Card):
         methodOutput = deckInstance.shuffleDeck()
         self.assertEqual(expectedOutput, methodOutput)
 
+
+    def testBurnCard(self):
+        # create test card object
+        cardInstance = cardClass.Card()
+        cardInstance.testCards = {
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "Jack": 11,
+            "Queen": 12,
+            "King": 13,
+            "Ace": 14}
+        cardInstance.testSuits = ["Diamonds", "Hearts", "Clubs", "Spades"]
+        # call the constructor and pass the test card object
+        deckInstance = deckClass.Deck(cardInstance)
+        # create testDeck object
+        testDeck = deckInstance.createDeck()
+        # create a copy to be passed to method
+        testDeckCopy = testDeck.copy()
+        for x in range(3):
+            testDeck.popitem()
+        expectedOutput = testDeck
+
+        methodOutput = deckInstance.burnCard(testDeckCopy)
+        self.assertEqual(expectedOutput, methodOutput)
+            
+            
+
