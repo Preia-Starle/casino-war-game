@@ -35,3 +35,6 @@ clean:
 	rm -rf htmlcov
 	rm -rf __pycache__
 
+install:
+	$(PYTHON) -m pip install -r requirements.txt
+
