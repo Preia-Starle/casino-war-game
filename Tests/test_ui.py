@@ -26,7 +26,8 @@ class TestMenuUi(unittest.TestCase):
                                                  call(f'{"Main menu":.^77}'),
                                                  call(f'\n{"1. New Game":^77}'),
                                                  call(f'{"2. Leaderboard":^80}'),
-                                                 call(f'{"3. Exit":^73}')])
+                                                 call(f'{"3. Rules":^74}'),
+                                                 call(f'{"4. Exit":^73}')])
 
     @patch('builtins.print')
     def testPlayerNameSelector(self, mock_print):
@@ -44,6 +45,20 @@ class TestMenuUi(unittest.TestCase):
                                                  call(f'{"Difficulty selector":.^77}'),
                                                  call(f'\n{"1. Easy":^77}'),
                                                  call(f'{"2. Normal":^80}')])
+        
+    @patch('builtins.print')
+    def testRules(self, mock_print):
+        uiClass.MenuUI.rules()
+        self.assertEqual(mock_print.mock_calls, [call(TestMenuUi.logo),
+                                                 call(f'{"Rules":.^77}'),
+                                                 call("\nEach player starts with a balance of a 1000."),
+                                                 call("One card each is dealt to the players."),
+                                                 call("Card ranks (High -> Low): A K Q J 10 9 8 7 6 5 4 3 2"),
+                                                 call("Whoever has the higher card win the wager they bet. One with a smaller card \nloses their bet."),
+                                                 call("\nA tie occurs when the players each have cards of the same rank. In a tie the \nplayers have two options: \n1. A player can surrender, in which case the player loses half the bet.\n2. A player can go to war, in which case the player must double their stake."),
+                                                 call("\nIf one of the players chose to go to war, but the other surrends, the \nplayer who chose to go to war gets 1.5x they bet back."),
+                                                 call("In a war, the computer burns three cards before dealing each of them \nan additional card and the game continues as normal."),
+                                                 call("\nA player wins if the other player runs out of their balance, \nor can leave at anytime by writing '0' in the bet window. ")])
 
 
 class TestTableUi(unittest.TestCase):
