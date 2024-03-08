@@ -196,10 +196,3 @@ class TestMenu(unittest.TestCase):
 
         self.assertEqual(testValues, returnedValues)
         
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()
-

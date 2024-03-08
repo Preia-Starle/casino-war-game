@@ -164,9 +164,10 @@ class EndGameUI:
         # score updated in Game class
 
     """Happens when there is no more card left in the deck"""
-    def noCardsLeft():
+    def noCardsLeft(playerBalance):
         MenuUI.logo()
         print(f'{"Game ended! No more cards left in the deck":.^77}')
+        print(f'{"Your final balance: %d " % (playerBalance) :.^77}')
 
 """Prints out MidGame uis"""
 class midGameVisuals:

@@ -21,11 +21,13 @@ class Game:
     bet = betClass.Bet()
     scores = scoresClass.Scores()
 
+    gameGoing = True
     # get previous scores from the cache
     scores.update()
 
     def regularGame():
         """Prints out Main menu"""
+        Game.gameGoing = True
         menuResults = uiClass.Menu.callMenu()
         playerName = menuResults[0]
         difficulty = menuResults[1]
@@ -33,18 +35,18 @@ class Game:
         """Creates player and AI object"""
         player = playerClass.Player(playerName)
         playerBalance = playerClass.Player.get_balance(player)
-        scores.add_player(player)
+        Game.scores.add_player(player)
 
         ai = intellClass.Intelligence(Game.shuffledDeck, 1000)
         aiBalance = intellClass.Intelligence.getAiBalance(ai)
 
-        gameGoing = True
-        while gameGoing:
+        
+        while Game.gameGoing:
             betAmount = uiClass.BetUI.bet(playerBalance)
 
             """Exit midgame"""
             if betAmount == 0:
-                gameGoing = False
+                Game.gameGoing = False
             else:
                 """Checks if there are enough card left in deck"""
                 enoughCards = Game.cardHand.enoughCardsInDeck(Game.shuffledDeck)
@@ -64,7 +66,7 @@ class Game:
                     aiDecision = results[4]
 
                     # update the score of the player
-                    scores.update_player_balance(player, playerBalance)
+                    Game.scores.update_player_balance(player, playerBalance)
 
                     """Prints out table"""
                     uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
@@ -78,27 +80,28 @@ class Game:
                         uiClass.midGameVisuals.aiAction(aiDecision)
                 else:
                     """No card left in the deck"""
-                    gameGoing = False
-                    uiClass.EndGameUI.noCardsLeft()
+                    Game.gameGoing = False
+                    uiClass.EndGameUI.noCardsLeft(playerBalance)
                     Game.startGameAgain() 
 
             """Game ending scenarios"""
             if playerBalance <= 0:
                 """Player lost all of its balance""" 
-                gameGoing = False
+                Game.gameGoing = False
                 uiClass.EndGameUI.zeroBalance()
                 Game.startGameAgain()
 
             elif aiBalance <= 0:
                 """Ai lost all of its balance"""
-                gameGoing = False
+                Game.gameGoing = False
                 uiClass.EndGameUI.aiZeroBalance()
 
                 # add 1000$ to the balance because he won
-                scores.update_player_balance(player, playerBalance + 1000)
+                Game.scores.update_player_balance(player, playerBalance + 1000)
 
                 Game.startGameAgain()
         
+        Game.gameGoing = False
         menuResults = uiClass.Menu.callMenu()
     
     """Check if AI has enough balance"""
@@ -226,12 +229,14 @@ class Game:
     """Start the game again from the beginning"""
     def startGameAgain():
         # save scores to cache (object serialization)
-        scores.save()
+        Game.scores.save()
+        Game.gameGoing = False
 
         choice = input(print("Would you like to start again? (y/n): "))
         if choice == "y":
             Game.shuffledDeck = Game.deck.shuffleDeck()
             Game.regularGame()
+            
     
 
     
