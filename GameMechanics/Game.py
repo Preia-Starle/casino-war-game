@@ -34,7 +34,7 @@ class Game:
 
         """Creates player and AI object"""
         player = playerClass.Player(playerName)
-        playerBalance = playerClass.Player.get_balance(player)
+        playerBalance = player.get_balance()
         Game.scores.add_player(player)
 
         ai = intellClass.Intelligence(Game.shuffledDeck, 1000)

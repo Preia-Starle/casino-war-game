@@ -26,7 +26,7 @@ class Scores():
         """returns a string containg the name and the score of each player"""
 
         # use Player's __str__ method
-        return "\n".join([str(p) for p in self.leaderboard])
+        return "\n".join([f"{i+1}. {str(self.leaderboard[i])}" for i in range(len(self.leaderboard))])
 
     def __eq__(self, other):
         """returns True if the other class has the same leaderboard, returns False otherwise"""
