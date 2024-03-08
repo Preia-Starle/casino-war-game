@@ -15,6 +15,7 @@ class TestIntelligence(unittest.TestCase):
         deck = deckClass.Deck(cards)
         ai = Intelligence(deck, 1000)
 
+        # testing
         res = ai
         exp = Intelligence
         self.assertIsInstance(res, exp)
@@ -27,6 +28,7 @@ class TestIntelligence(unittest.TestCase):
         shuffled_deck = deck.shuffleDeck()
         ai = Intelligence(shuffled_deck, 1000)
 
+        # testing
         res = ai.getOccurrences(shuffled_deck)
         self.assertEqual(len(res), 13)
 
@@ -38,6 +40,7 @@ class TestIntelligence(unittest.TestCase):
         shuffled_deck = deck.shuffleDeck()
         ai = Intelligence(shuffled_deck, 1000)
 
+        # testing
         occurrences = ai.getOccurrences(shuffled_deck)
         res = ai.calculateProbabilities(occurrences, shuffled_deck)
         self.assertEqual(len(res), 13)
@@ -51,7 +54,40 @@ class TestIntelligence(unittest.TestCase):
         shuffled_deck = deck.shuffleDeck()
         ai = Intelligence(shuffled_deck, 1000)
 
+        # testing
         res = ai.calculateTieProbability(shuffled_deck)
         self.assertIsInstance(res, float)
+
+    def test_calculate_higher_card_probability(self):
+        """Test the calculateHigherCardProbability() method of the Intelligence class"""
+        # initialize
+        cards = cardClass.Card()
+        deck = deckClass.Deck(cards)
+        shuffled_deck = deck.shuffleDeck()
+        ai = Intelligence(shuffled_deck, 1000)
+
+        # testing
+        res = ai.calculateHigherCardProbability(shuffled_deck)
+        self.assertIsInstance(res, float)
+
+        self.assertEqual(0 < res < 100, True)
+
+    def test_decide_surrender_medium_mode(self):
+        """Test the decideSurrenderMediumMode() method of the Intelligence class"""
+        # initialize
+        cards = cardClass.Card()
+        deck = deckClass.Deck(cards)
+        shuffled_deck = deck.shuffleDeck()
+        ai = Intelligence(shuffled_deck, 1000)
+
+        # testing with shuffled_deck
+        res = ai.decideSurrenderMediumMode(shuffled_deck)
+        self.assertIsInstance(res, bool)
+
+        # testing with different shuffled_deck
+        shuffled_deck = deck.shuffleDeck()
+        res = ai.decideSurrenderMediumMode(shuffled_deck)
+        self.assertIsInstance(res, bool)
+        
         
 
