@@ -24,7 +24,8 @@ class MenuUI:
         print(f'{"Main menu":.^77}')
         print(f'\n{"1. New Game":^77}')
         print(f'{"2. Leaderboard":^80}')
-        print(f'{"3. Exit":^73}')
+        print(f'{"3. Rules":^74}')
+        print(f'{"4. Exit":^73}')
 
     """Prints out player name selector"""
     def playerNameSelector():
@@ -39,6 +40,20 @@ class MenuUI:
         print(f'{"Difficulty selector":.^77}')
         print(f'\n{"1. Easy":^77}')
         print(f'{"2. Normal":^80}')
+
+    """Prints out the rules for the game"""
+    def rules():
+        MenuUI.logo()
+        print(f'{"Rules":.^77}')
+        print("\nEach player starts with a balance of a 1000.")
+        print("One card each is dealt to the players.")
+        print("Card ranks (High -> Low): A K Q J 10 9 8 7 6 5 4 3 2")
+        print("Whoever has the higher card win the wager they bet. One with a smaller card \nloses their bet.")
+        print("\nA tie occurs when the players each have cards of the same rank. In a tie the \nplayers have two options: \n1. A player can surrender, in which case the player loses half the bet.\n2. A player can go to war, in which case the player must double their stake.")
+        print("\nIf one of the players chose to go to war, but the other surrends, the \nplayer who chose to go to war gets 1.5x they bet back.")
+        print("In a war, the computer burns three cards before dealing each of them \nan additional card and the game continues as normal.")
+        print("\nA player wins if the other player runs out of their balance, \nor can leave at anytime by writing '0' in the bet window. ")
+
 
 """Prints out Table uis"""
 class TableUI:
@@ -212,10 +227,27 @@ class Menu:
                         choiceLeaderboard = int(input("\n>>>>>> "))
                         if choiceLeaderboard == 0:
                             Menu.callMenu()
+                        else:
+                            keepLeaderboard = True
                     except ValueError:
                         keepLeaderboard = True
-
             case 3:
+                keepRules = True
+                while keepRules:
+                    menu.rules()
+                    print("\nPress '0' to go back")
+
+                    try:
+                        keepRules = False
+                        choiceRules = int(input("\n>>>>>> "))
+                        if choiceRules == 0:
+                            Menu.callMenu()
+                        else:
+                            keepRules = True
+                    except ValueError:
+                        keepRules = True
+
+            case 4:
                 # TODO
                 # ! Saving the player score and name 
                 pass
