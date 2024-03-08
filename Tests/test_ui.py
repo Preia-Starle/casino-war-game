@@ -148,8 +148,39 @@ class TestEndGameUi(unittest.TestCase):
 
 
 
+class TestMidGameVisulas(unittest.TestCase):
+    @patch('builtins.print')
+    def testAiDecisionSurrend(self, mock_print):
+        aiDecision = True
+        uiClass.midGameVisuals.aiAction(aiDecision)
+        self.assertEqual(mock_print.mock_calls, [call("Ai decided to surrend")])
+    
+    @patch('builtins.print')
+    def testAiDecisionNotSurrend(self, mock_print):
+        aiDecision = False
+        uiClass.midGameVisuals.aiAction(aiDecision)
+        self.assertEqual(mock_print.mock_calls, [call("Ai decided not to surrend")])
+
+    @patch('builtins.print')
+    def testWinIndicatorWin(self, mock_print):
+        indicator = True
+        uiClass.midGameVisuals.winIndecator(indicator)
+        self.assertEqual(mock_print.mock_calls, [call("You won this round!")])
+
+    @patch('builtins.print')
+    def testWinIndicatorLose(self, mock_print):
+        indicator = False
+        uiClass.midGameVisuals.winIndecator(indicator)
+        self.assertEqual(mock_print.mock_calls, [call("You lost this round!")])
 
 
+class TestMenu(unittest.TestCase):
+    def testCallMenu(self):
+        testValues = ("Test", "Easy")
+        returnedValues = uiClass.Menu.callMenu()
+
+        self.assertEqual(testValues, returnedValues)
+        
 
 
 
