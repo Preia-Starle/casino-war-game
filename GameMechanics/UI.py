@@ -234,6 +234,7 @@ class Menu:
                         choiceLeaderboard = int(input("\n>>>>>> "))
                         if choiceLeaderboard == 0:
                             Menu.callMenu()
+                            return "Leaderboard works!"
                         else:
                             keepLeaderboard = True
                     except ValueError:
@@ -249,13 +250,12 @@ class Menu:
                         choiceRules = int(input("\n>>>>>> "))
                         if choiceRules == 0:
                             Menu.callMenu()
+                            return "Rules works!"
                         else:
                             keepRules = True
                     except ValueError:
                         keepRules = True
 
             case 4:
-                # TODO
-                # ! Saving the player score and name 
                 pass
         

@@ -16,7 +16,7 @@ class Player():
 
     def __str__(self):
         """ returns a string containg the name and the score of the player """
-        return f"{self.nickname} -- {self.balance:,d}$"
+        return f"{self.nickname} -- {int(self.balance):,d}$"
 
     def __eq__(self, other):
         if isinstance(other, Player):

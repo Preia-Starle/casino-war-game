@@ -157,9 +157,11 @@ class TestEndGameUi(unittest.TestCase):
         
     @patch('builtins.print')
     def testNoCardsLeft(self, mock_print):
-        uiClass.EndGameUI.noCardsLeft()
+        playerBalance = 500
+        uiClass.EndGameUI.noCardsLeft(playerBalance)
         self.assertEqual(mock_print.mock_calls, [call(TestMenuUi.logo),
-                                                 call(f'{"Game ended! No more cards left in the deck":.^77}')])
+                                                 call(f'{"Game ended! No more cards left in the deck":.^77}'),
+                                                 call(f'{"Your final balance: %d " % (playerBalance) :.^77}')])
 
 
 
@@ -190,9 +192,29 @@ class TestMidGameVisulas(unittest.TestCase):
 
 
 class TestMenu(unittest.TestCase):
-    def testCallMenu(self):
+    def testCallMenuEasyMode(self):
         testValues = ("Test", "Easy")
         returnedValues = uiClass.Menu.callMenu()
 
         self.assertEqual(testValues, returnedValues)
+
+    def testCallMenuNormalMode(self):
+        testValues = ("Test", "Normal")
+        returnedValues = uiClass.Menu.callMenu()
+
+        self.assertEqual(testValues, returnedValues)
+
+    def testCallMenuLeaderboard(self):
+        returnedValue = uiClass.Menu.callMenu()
+
+        self.assertEqual("Leaderboard works!", returnedValue)
+    
+    def testCallMenuLeaderboard(self):
+        returnedValue = uiClass.Menu.callMenu()
+
+        self.assertEqual("Rules works!", returnedValue)
+
+        
+
+
         
