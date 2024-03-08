@@ -93,7 +93,6 @@ class TableUI:
 class BetUI:
     """Asks the player how much they want to bet"""
     def bet(balance):
-        betAmount = 0
         betSelf = betClass.Bet
         hasEnoughBalance = False
 
@@ -126,6 +125,7 @@ class LeaderboardUI:
     def leaderboard():
         MenuUI.logo()
         print(f'{"Leaderboard":.^77}')
+        # TODO
         #for player in savedPlayer write out playerName and Score
         
 """Prints out EndGame uis"""
@@ -140,6 +140,7 @@ class EndGameUI:
         MenuUI.logo()
         print(f'{"Congratulation! The AI lost all its money.":.^77}')
         print(f'{"+1000 points have been added to your score": ^77}')
+        # TODO +1000 point
 
     """Happens when there is no more card left in the deck"""
     def noCardsLeft():
@@ -213,7 +214,7 @@ class Menu:
                             Menu.callMenu()
                     except ValueError:
                         keepLeaderboard = True
-    
+
             case 3:
                 # ! Saving the player score and name 
                 pass
