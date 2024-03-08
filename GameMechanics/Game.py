@@ -19,6 +19,10 @@ class Game:
     shuffledDeck = deck.shuffleDeck()
     cardHand = cardHandClass.CardHand(shuffledDeck)
     bet = betClass.Bet()
+    scores = scoresClass.Scores()
+
+    # get previous scores from the cache
+    scores.update()
 
     def regularGame():
         """Prints out Main menu"""
@@ -29,6 +33,7 @@ class Game:
         """Creates player and AI object"""
         player = playerClass.Player(playerName)
         playerBalance = playerClass.Player.get_balance(player)
+        scores.add_player(player)
 
         ai = intellClass.Intelligence(Game.shuffledDeck, 1000)
         aiBalance = intellClass.Intelligence.getAiBalance(ai)
@@ -58,6 +63,9 @@ class Game:
                     indicator = results[3]
                     aiDecision = results[4]
 
+                    # update the score of the player
+                    scores.update_player_balance(player, playerBalance)
+
                     """Prints out table"""
                     uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
                     
@@ -85,6 +93,10 @@ class Game:
                 """Ai lost all of its balance"""
                 gameGoing = False
                 uiClass.EndGameUI.aiZeroBalance()
+
+                # add 1000$ to the balance because he won
+                scores.update_player_balance(player, playerBalance + 1000)
+
                 Game.startGameAgain()
         
         menuResults = uiClass.Menu.callMenu()
@@ -213,6 +225,9 @@ class Game:
 
     """Start the game again from the beginning"""
     def startGameAgain():
+        # save scores to cache (object serialization)
+        scores.save()
+
         choice = input(print("Would you like to start again? (y/n): "))
         if choice == "y":
             Game.shuffledDeck = Game.deck.shuffleDeck()

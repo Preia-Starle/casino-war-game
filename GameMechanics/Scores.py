@@ -1,4 +1,5 @@
 import pickle
+import os
 import sys
 sys.path.append(".")
 
@@ -35,8 +36,13 @@ class Scores():
 
     def update(self):
         """Get previous scores saved in GameMechanics/scores.bin"""
-        with open("GameMechanics/scores.bin", "rb") as previous_scores :
-            self.leaderboard = pickle.load(previous_scores)
+        file_path = "GameMechanics/scores.bin"
+
+        # check if file bin file exists
+        if os.path.exists(file_path):
+
+            with open(file_path, "rb") as previous_scores :
+                self.leaderboard = pickle.load(previous_scores)
 
 
     def save(self):
@@ -97,4 +103,14 @@ class Scores():
         """ returns list of all names """
         return [p.get_name() for p in self.leaderboard]
 
+if __name__ == "__main__":
+    s = Scores()
+    p = Player("player1")
 
+    s.update()
+
+    print(s)
+
+    s.add_player(p)
+
+    s.save()
