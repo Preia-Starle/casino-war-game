@@ -5,6 +5,7 @@ sys.path.append(".")
 from CardMechanics import Card as cardClass
 from CardMechanics import Deck as deckClass
 from GameMechanics import Bet as betClass
+from GameMechanics import Scores as scoresClass
 
 """Prints out Menu uis"""
 class MenuUI:
@@ -140,8 +141,12 @@ class LeaderboardUI:
     def leaderboard():
         MenuUI.logo()
         print(f'{"Leaderboard":.^77}')
-        # TODO
-        #for player in savedPlayer write out playerName and Score
+
+        scores = scoresClass.Scores()
+        scores.update()
+
+        print(scores)
+        
         
 """Prints out EndGame uis"""
 class EndGameUI:
@@ -155,7 +160,8 @@ class EndGameUI:
         MenuUI.logo()
         print(f'{"Congratulation! The AI lost all its money.":.^77}')
         print(f'{"+1000 points have been added to your score": ^77}')
-        # TODO +1000 point
+
+        # score updated in Game class
 
     """Happens when there is no more card left in the deck"""
     def noCardsLeft():
