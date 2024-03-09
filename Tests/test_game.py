@@ -25,6 +25,7 @@ from Players import Intelligence as intellClass
 13. War
 14. War"""
 
+
 class testRegularGame(unittest.TestCase):
     card = Card.Card()
     deck = Deck.Deck(card)

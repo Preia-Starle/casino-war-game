@@ -5,6 +5,22 @@ import unittest
 import unittest.mock
 from unittest.mock import patch, call
 
+
+"""Guide TestUI:
+1. 50
+2. War
+3. 1
+4. Test
+5. 3
+6. 0
+7. 2
+8. 0
+9. 4
+10. 1
+11. Test
+12. 2
+13. Test"""
+
 class TestMenuUi(unittest.TestCase):
 
     logo = """.------..------..------..------..------..------.     .------..------..------.
