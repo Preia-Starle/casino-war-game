@@ -5,23 +5,6 @@ import unittest
 import unittest.mock
 from unittest.mock import patch, call
 
-
-"""Guide TestUI:
-1. 50
-2. War
-3. 1
-4. Test
-5. 1
-6. 3
-7. 0
-8. 2
-9. 0
-10. 4
-11. 1
-12. Test
-13. 2
-14. Test"""
-
 class TestMenuUi(unittest.TestCase):
 
     logo = """.------..------..------..------..------..------.     .------..------..------.
@@ -230,3 +213,8 @@ class TestMenu(unittest.TestCase):
         returnedValue = uiClass.Menu.callMenu()
 
         self.assertEqual("Rules works!", returnedValue)
+
+        
+
+
+        
