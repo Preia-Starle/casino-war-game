@@ -7,12 +7,36 @@ from GameMechanics import Game as gameClass
 from CardMechanics import Card, Deck
 from Players import Intelligence as intellClass
 
+
+
+"""Guide TestGame:
+1. 1
+2. Test
+3. 1
+4. 40
+5. 0
+6. 4
+7. N
+8. Y
+9. 4
+10. Surrend
+11. War
+12. Surrend
+13. War
+14. War"""
+
 class testRegularGame(unittest.TestCase):
     card = Card.Card()
     deck = Deck.Deck(card)
     ai = intellClass.Intelligence(deck.shuffleDeck, 400)
 
-    # TODO regularGame()
+    def testRegularGame(self):
+        testVar = "regularGame works!"
+        returnedVar = gameClass.Game.regularGame()
+
+        self.assertEqual(testVar, returnedVar)
+
+
 
     """aiHasEnoughBalance Tests"""
     def testAiHasEnoughBalanceYes(self):
@@ -32,6 +56,7 @@ class testRegularGame(unittest.TestCase):
         self.assertEqual(testVar, returnedVar)
 
     
+    """whosCardIsHigher Tests"""
     def testWhosCardIsHigherPlayerWins(self):
         playerName = "Test"
         playerHand = ("9 of Diamonds", 9)
@@ -76,7 +101,9 @@ class testRegularGame(unittest.TestCase):
         returnedVar = gameClass.Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, difficulty, testRegularGame.ai, aiDecision)
 
         self.assertEqual(testVar, returnedVar)
-        
+    
+
+    """tie Tests"""
     def testTiePlayerNotEnoughBalance(self):
         playerName = "Test"
         playerBalance = 40
@@ -125,6 +152,8 @@ class testRegularGame(unittest.TestCase):
         returnedVar = gameClass.Game.tie(playerName, betAmount, playerBalance, aiBalance, difficulty, testRegularGame.ai, aiDecision)
         self.assertEqual(testVar, returnedVar)
     
+
+    """startGameAgain tests"""
     def testStartGameAgainYes(self):
         testVar = "New Game selected!"
         returnedVar = gameClass.Game.startGameAgain()
@@ -135,9 +164,3 @@ class testRegularGame(unittest.TestCase):
         returnedVar = gameClass.Game.startGameAgain()
         self.assertEqual(testVar, returnedVar)
         
-
-
-
-
-if __name__ == '__main__':
-    unittest.main()

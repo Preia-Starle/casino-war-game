@@ -105,6 +105,7 @@ class Game:
         
         Game.gameGoing = False
         menuResults = uiClass.Menu.callMenu()
+        return "regularGame works!"
     
     """Check if AI has enough balance"""
     def aiHasEnoughBalance(betAmount, aiBalance):

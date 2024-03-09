@@ -1,4 +1,3 @@
-'''
 import sys
 sys.path.append(".")
 from GameMechanics import UI as uiClass
@@ -214,8 +213,3 @@ class TestMenu(unittest.TestCase):
         returnedValue = uiClass.Menu.callMenu()
 
         self.assertEqual("Rules works!", returnedValue)
-
-        
-'''
-
-        
