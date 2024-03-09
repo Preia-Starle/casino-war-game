@@ -14,6 +14,7 @@ class testRegularGame(unittest.TestCase):
 
     # TODO regularGame()
 
+    """aiHasEnoughBalance Tests"""
     def testAiHasEnoughBalanceYes(self):
         betAmount = 50
         aiBalance = 100
@@ -78,8 +79,6 @@ class testRegularGame(unittest.TestCase):
         
     def testTiePlayerNotEnoughBalance(self):
         playerName = "Test"
-        playerHand = ("2 of Diamonds", 2)
-        aiHand = ("2 of Clubs", 2)
         playerBalance = 40
         aiBalance = 400
         betAmount = 50
@@ -92,8 +91,6 @@ class testRegularGame(unittest.TestCase):
 
     def testTieAiNotEnoughBalance(self):
         playerName = "Test"
-        playerHand = ("2 of Diamonds", 2)
-        aiHand = ("2 of Clubs", 2)
         playerBalance = 100
         aiBalance = 40
         betAmount = 50
@@ -101,6 +98,30 @@ class testRegularGame(unittest.TestCase):
         aiDecision = 4
 
         testVar = (75.0, 20.0, "Draw", 1)
+        returnedVar = gameClass.Game.tie(playerName, betAmount, playerBalance, aiBalance, difficulty, testRegularGame.ai, aiDecision)
+        self.assertEqual(testVar, returnedVar)
+
+    def testTieWar(self):
+        playerName = "Test"
+        playerBalance = 100
+        aiBalance = 400
+        betAmount = 50
+        difficulty = "Easy"
+        aiDecision = 7
+
+        testVar = (200, 300, True, 0)
+        returnedVar = gameClass.Game.tie(playerName, betAmount, playerBalance, aiBalance, difficulty, testRegularGame.ai, aiDecision)
+        self.assertEqual(testVar, returnedVar)
+
+    def testTieSurrend(self):
+        playerName = "Test"
+        playerBalance = 100
+        aiBalance = 400
+        betAmount = 50
+        difficulty = "Easy"
+        aiDecision = 5
+
+        testVar = (75.0, 475.0, "Draw", 0)
         returnedVar = gameClass.Game.tie(playerName, betAmount, playerBalance, aiBalance, difficulty, testRegularGame.ai, aiDecision)
         self.assertEqual(testVar, returnedVar)
     
