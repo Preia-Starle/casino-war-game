@@ -29,9 +29,11 @@ class Game:
         """Prints out Main menu"""
         Game.gameGoing = True
         menuResults = uiClass.Menu.callMenu()
-        if menuResults:
+        if menuResults and menuResults not in ("Leaderboard works!", "Rules works!"):
             playerName = menuResults[0]
             difficulty = menuResults[1]
+        elif menuResults in ("Leaderboard works!", "Rules works!"):
+            return "Quit"
         else:
             return "Player quit!"
 
