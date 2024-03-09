@@ -105,6 +105,7 @@ class Game:
         
         Game.gameGoing = False
         menuResults = uiClass.Menu.callMenu()
+        return "regularGame works!"
     
     """Check if AI has enough balance"""
     def aiHasEnoughBalance(betAmount, aiBalance):
@@ -156,6 +157,7 @@ class Game:
     def tie(playerName, betAmount, playerBalance, aiBalance, difficulty, ai, aiChoice):
         shuffledDeck = Game.shuffledDeck
         choice = uiClass.BetUI.war()
+        testWin = False
 
         """Checks if player has enough balance to go to war"""
         if choice.upper() == "WAR":
@@ -173,14 +175,20 @@ class Game:
             aiChoice = True
         else:
             """AI decision based on the selected difficulty"""
-            if difficulty == "Easy" and aiChoice not in (4,5):
+            if difficulty == "Easy" and aiChoice not in (4,5,7):
                 aiChoice = intellClass.Intelligence.decideSurrenderEasyMode(ai)
-            elif difficulty == "Normal" and aiChoice not in (4,5):
+            elif difficulty == "Normal" and aiChoice not in (4,5,7):
                 aiChoice = intellClass.Intelligence.decideSurrenderMediumMode(ai, shuffledDeck)
+            #Test Cases
             elif aiChoice == 4:
                 aiChoice = True
             elif aiChoice == 5:
                 aiChoice = False
+            elif aiChoice == 7:
+                aiChoice = False
+                testWin = True
+
+
 
         aiBetAmount = Game.aiHasEnoughBalance(betAmount, aiBalance)
 
@@ -199,7 +207,10 @@ class Game:
                 shuffledDeck = draws[2]
                 uiClass.TableUI.table(playerName, playerHand, aiHand, playerBalance, aiBalance)
                 
-                results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, difficulty, ai, aiDecision)
+                if testWin:
+                    results = ((playerBalance + betAmount), (aiBalance - betAmount), True)
+                else:
+                    results = Game.whosCardIsHigher(playerName, playerHand, aiHand, playerBalance, aiBalance, betAmount, difficulty, ai, aiDecision)
                 playerBalance = results[0]
                 aiBalance = results[1]
                 indicator = results[2]
