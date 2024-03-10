@@ -106,17 +106,6 @@ Or to clean the generated documentation
     make clean-docs
 ```
 
-
-## Deployment
-
-To deploy this project run
-
-```bash
-  npm run deploy
-```
-
-
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
