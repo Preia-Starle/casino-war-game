@@ -15,6 +15,7 @@ coverage:
 	@printf "Mac -- open -a Google\ Chrome htmlcov/index.html\n"
 	@printf "Linux -- firefox htmlcov/index.html\n"
 
+
 venv:
 	@$(call MESSAGE,$@)
 	$(PYTHON) -m venv .venv

@@ -36,13 +36,76 @@ Insert link to demo
 
 ## Installation
 
-Install my-project with npm
+Use git clone to clone the repository
 
 ```bash
-  npm install my-project
-  cd my-project
+git clone https://github.com/Preia-Starle/casino-war-game
+```
+
+
+It is best to make a virtual environement (venv) first before installing dependencies.
+
+Making virtual environement (venv)
+```bash
+    make venv
+```
+And follow the instructions.
+
+Installing necessary dependencies
+```bash
+    make install
+```
+
+Run the game
+```bash
+    make
 ```
     
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+  make coverage
+```
+
+## Linting
+
+To run linting
+
+```bash
+    make flake8
+```
+
+or 
+
+```bash
+    make pylint
+```
+
+## Documentation
+
+Documentation is available and can be run with
+
+```bash
+    make docs
+```
+
+
+## Clearing Files
+To clear generated files while playing the game or generating documentation, run 
+
+```bash
+    make clean
+```
+
+Or to clean the generated documentation
+```bash
+    make clean-docs
+```
+
+
 ## Deployment
 
 To deploy this project run
@@ -51,14 +114,6 @@ To deploy this project run
   npm run deploy
 ```
 
-
-## Running Tests
-
-To run tests, run the following command
-
-```bash
-  npm run test
-```
 
 
 ## License
