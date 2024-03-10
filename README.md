@@ -32,7 +32,7 @@ If the player continues play in view of a tie, the computer burns (discards) thr
 
 ## Demo
 
-- [youtube video] https://www.youtube.com/watch?v=Bp0nDgK6Xxk
+- [YouTube video](https://www.youtube.com/watch?v=Bp0nDgK6Xxk)
 
 
 ## Installation
