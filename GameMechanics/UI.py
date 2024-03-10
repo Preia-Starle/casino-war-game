@@ -186,12 +186,7 @@ class midGameVisuals:
 """Handles Menu"""
 class Menu:
     def callMenu():
-        c = cardClass.Card()
-        d = deckClass.Deck(c)
-
-        difficulty = ""
         menu = MenuUI
-        leaderboard = LeaderboardUI
         keepMenu = True
 
         """Checks if input is a number"""
@@ -199,64 +194,78 @@ class Menu:
             menu.mainMenu()
             try:
                 choiceMenu = int(input("\n>>>>>> "))
-                keepMenu = False
+
+                menuResults = Menu.options(choiceMenu)
+                if menuResults in ("Leaderboard works!", "Rules works!", "Wrong char"):
+                    keepMenu = True
+                elif menuResults == "Quit":
+                    keepMenu = False
+                else:
+                    keepMenu = False
+                    return menuResults
+
             except ValueError:
                 keepMenu = True
+
+    def options(choice):
+        menu = MenuUI
+        leaderboard = LeaderboardUI
+
+        if choice == 1:
+            """Game starts"""
+            playerName = menu.playerNameSelector()
+            keepDiffMenu = True
+            while keepDiffMenu:
+                """Checks if the input is a number"""
+                menu.difficultySelector()
+                try:
+                    difficultyChoice = int(input("\n>>>>>> "))
+                    if difficultyChoice == 1:
+                        difficulty = "Easy"
+                    elif difficultyChoice == 2:
+                        difficulty = "Normal"
+                    keepDiffMenu = False
+
+                    return playerName, difficulty
+                except ValueError:
+                    keepDiffMenu = True
         
-        match choiceMenu:
-            case 1:
-                """Game starts"""
-                playerName = menu.playerNameSelector()
-                keepDiffMenu = True
-                while keepDiffMenu:
-                    """Checks if the input is a number"""
-                    menu.difficultySelector()
-                    try:
-                        difficultyChoice = int(input("\n>>>>>> "))
-                        if difficultyChoice == 1:
-                            difficulty = "Easy"
-                        elif difficultyChoice == 2:
-                            difficulty = "Normal"
-                        keepDiffMenu = False
+        elif choice == 2:
+            """Leaderboard shown"""
+            keepLeaderboard = True
+            while keepLeaderboard:
+                leaderboard.leaderboard()
+                print("Press '0' to go back")
 
-                        return playerName, difficulty
-                    except ValueError:
-                        keepDiffMenu = True
-            case 2:
-                """Leaderboard shown"""
-                keepLeaderboard = True
-                while keepLeaderboard:
-                    leaderboard.leaderboard()
-                    print("Press '0' to go back")
-
-                    try:
-                        keepLeaderboard = False
-                        choiceLeaderboard = int(input("\n>>>>>> "))
-                        if choiceLeaderboard == 0:
-                            Menu.callMenu()
-                            return "Leaderboard works!"
-                        else:
-                            keepLeaderboard = True
-                    except ValueError:
+                try:
+                    keepLeaderboard = False
+                    choiceLeaderboard = int(input("\n>>>>>> "))
+                    if choiceLeaderboard == 0:
+                        return "Leaderboard works!"
+                    else:
                         keepLeaderboard = True
-            case 3:
-                keepRules = True
-                while keepRules:
-                    menu.rules()
-                    print("\nPress '0' to go back")
+                except ValueError:
+                    keepLeaderboard = True
+        
+        elif choice == 3:
+            keepRules = True
+            while keepRules:
+                menu.rules()
+                print("\nPress '0' to go back")
 
-                    try:
-                        keepRules = False
-                        choiceRules = int(input("\n>>>>>> "))
-                        if choiceRules == 0:
-                            Menu.callMenu()
-                            return "Rules works!"
-                        else:
-                            keepRules = True
-                    except ValueError:
+                try:
+                    keepRules = False
+                    choiceRules = int(input("\n>>>>>> "))
+                    if choiceRules == 0:
+                        return "Rules works!"
+                    else:
                         keepRules = True
+                except ValueError:
+                    keepRules = True
 
-            case 4:
+        elif choice == 4:
+            return "Quit"
 
-                pass
+        else:
+            return "Wrong char"
         

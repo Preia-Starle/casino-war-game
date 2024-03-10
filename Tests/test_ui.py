@@ -12,15 +12,14 @@ from unittest.mock import patch, call
 3. 1
 4. Test
 5. 1
-6. 3
-7. 0
+6. 1
+7. Test
 8. 2
-9. 0
-10. 4
-11. 1
-12. Test
-13. 2
-14. Test"""
+9. Test
+10. Any number
+11. 0
+12. Any number
+13. 0"""
 
 class TestMenuUi(unittest.TestCase):
 
@@ -221,12 +220,20 @@ class TestMenu(unittest.TestCase):
 
         self.assertEqual(testValues, returnedValues)
 
-    def testCallMenuLeaderboard(self):
-        returnedValue = uiClass.Menu.callMenu()
 
+class TestOptions(unittest.TestCase):
+    def testLeaderboard(self):
+        returnedValue = uiClass.Menu.options(choice=2)
         self.assertEqual("Leaderboard works!", returnedValue)
-    
-    def testCallMenuLeaderboard(self):
-        returnedValue = uiClass.Menu.callMenu()
 
+    def testRules(self):
+        returnedValue = uiClass.Menu.options(choice=3)
         self.assertEqual("Rules works!", returnedValue)
+    
+    def testQuit(self):
+        returnedValue = uiClass.Menu.options(choice=4)
+        self.assertEqual("Quit", returnedValue)
+    
+    def testWrongCharacter(self):
+        returnedValue = uiClass.Menu.options(choice=9)
+        self.assertEqual("Wrong char", returnedValue)
