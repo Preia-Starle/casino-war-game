@@ -142,6 +142,12 @@ class TestBetUi(unittest.TestCase):
         inputBetAmount = uiClass.BetUI.bet(balance)
         self.assertEqual(testBetAmount, inputBetAmount)
 
+    def testCheat(self):
+        res = uiClass.BetUI.cheat()
+        exp = 100000
+
+        self.assertEqual(res, exp)
+
     def testWar(self):
         testChoice = "WAR"
 

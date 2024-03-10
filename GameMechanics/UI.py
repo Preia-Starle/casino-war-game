@@ -116,7 +116,15 @@ class BetUI:
         while not hasEnoughBalance:
             try:
                 """Checks if the user has enough balance for the bet"""
-                betAmount = int(input(f'\n{"How much would you like to bet? (0 - Quit) (Current ammount: %d):  " % balance}'))
+
+                userInput = input(f'\n{"How much would you like to bet? (0 - Quit) (Current ammount: %d):  " % balance}')
+
+                # look if user typed "cheat"
+                if isinstance(userInput, str) and userInput.lower() == "cheat":
+                    balance = BetUI.cheat()
+
+                betAmount = int(userInput)
+
                 hasEnoughBalance = betSelf.enoughBalance(betSelf, betAmount, balance)
                 if not hasEnoughBalance:
                     print("You don't have enough balance to make that bet!")
@@ -125,6 +133,12 @@ class BetUI:
 
         return betAmount
     
+
+    def cheat():
+        """Returns enormous sum"""
+        return 100000
+
+
     """Asks the player is they want to go to war or not"""
     def war():
         choice = ""

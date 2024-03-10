@@ -103,14 +103,3 @@ class Scores():
         """ returns list of all names """
         return [p.get_name() for p in self.leaderboard]
 
-if __name__ == "__main__":
-    s = Scores()
-    p = Player("player1")
-
-    s.update()
-
-    print(s)
-
-    s.add_player(p)
-
-    s.save()
