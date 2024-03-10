@@ -26,8 +26,9 @@ If the player continues play in view of a tie, the computer burns (discards) thr
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+<img width="561" alt="Screenshot 2024-03-10 at 12 31 21" src="https://github.com/Preia-Starle/casino-war-game/assets/136988961/ecfa67b7-a6de-4dc9-89c8-2d3468fb9f93">
 
+<img width="566" alt="Screenshot 2024-03-10 at 12 31 42" src="https://github.com/Preia-Starle/casino-war-game/assets/136988961/d6aaa24f-7fa6-4288-a828-d6f831a83edf">
 
 ## Demo
 
