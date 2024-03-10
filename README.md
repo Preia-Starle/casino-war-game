@@ -106,6 +106,12 @@ Or to clean the generated documentation
     make clean-docs
 ```
 
+## Mac
+
+```bash
+export PYTHON=python3
+```
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
