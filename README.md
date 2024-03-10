@@ -48,18 +48,18 @@ It is best to make a virtual environement (venv) first before installing depende
 
 Making virtual environement (venv)
 ```bash
-    make venv
+make venv
 ```
 And follow the instructions.
 
 Installing necessary dependencies
 ```bash
-    make install
+make install
 ```
 
 Run the game
 ```bash
-    make
+make start
 ```
     
 
@@ -68,7 +68,7 @@ Run the game
 To run tests, run the following command
 
 ```bash
-  make coverage
+make coverage
 ```
 
 ## Linting
@@ -76,13 +76,13 @@ To run tests, run the following command
 To run linting
 
 ```bash
-    make flake8
+make flake8
 ```
 
 or 
 
 ```bash
-    make pylint
+make pylint
 ```
 
 ## Documentation
@@ -90,7 +90,7 @@ or
 Documentation is available and can be run with
 
 ```bash
-    make docs
+make docs
 ```
 
 
@@ -98,18 +98,23 @@ Documentation is available and can be run with
 To clear generated files while playing the game or generating documentation, run 
 
 ```bash
-    make clean
+make clean
 ```
 
 Or to clean the generated documentation
 ```bash
-    make clean-docs
+make clean-docs
 ```
 
-## Mac
+## Mac/Linux
 
+If there is a problem with python, try running
 ```bash
 export PYTHON=python3
+```
+and then
+```bash
+make start
 ```
 
 ## License
