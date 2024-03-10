@@ -1,5 +1,5 @@
 #change to `python` if python3 is not found
-PYTHON ?= python3 
+PYTHON ?= python
 
 # Print out colored action message
 MESSAGE = printf "\033[32;01m---> $(1)\033[0m\n"
