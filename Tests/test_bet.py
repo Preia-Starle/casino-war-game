@@ -113,13 +113,5 @@ class TestBet(unittest.TestCase):
         self.assertEqual(classMethodOutput, expectedOutput)
 
 
-
-
-
         
-
-        
-
-
-if __name__ == '__main__':
-    unittest.main()
+    

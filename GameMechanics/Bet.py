@@ -3,6 +3,7 @@ sys.path.append(".")
 
 class Bet():
 
+
     def cardHigher(self, currentBalance, bet):
         """ Update balance if win """
         # if card higher (win) -> win double the bet
@@ -38,14 +39,14 @@ class Bet():
     
     def goAllIn(self, aiBalance, betPlayer):
         """ Go all in if player bet larger than ai balance """
-        betAi = 0
+        aiBet = 0
         goAllIn = False
         if(betPlayer > aiBalance):
-            betAi = aiBalance
+            aiBet = aiBalance
             goAllIn = True
         else:
-            betAi = betPlayer
+            aiBet = betPlayer
             goAllIn = False
-        return betAi, goAllIn
+        return aiBet, goAllIn
         
 
