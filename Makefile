@@ -73,10 +73,10 @@ docs:
 
 pylint:
 	@$(call MESSAGE,$@)
-	-pylint GameMechanics/*.py CardMechanics/*.py Players/*.py
+	pylint -rn -d C0103 GameMechanics/*.py CardMechanics/*.py Players/*.py
 
 flake8:
 	@$(call MESSAGE,$@)
-	-flake8
+	flake8
 
 lint: flake8 pylint
