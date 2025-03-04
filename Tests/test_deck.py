@@ -6,6 +6,8 @@ import random
 from CardMechanics import Card as cardClass
 from CardMechanics import Deck as deckClass
 
+random.seed(42)
+
 class TestDeck(unittest.TestCase, cardClass.Card):
 
     def test__init__deck(self):
